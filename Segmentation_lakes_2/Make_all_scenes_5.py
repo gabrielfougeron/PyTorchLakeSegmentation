@@ -72,34 +72,9 @@ device = torch.device('cuda')
 # '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
 # ]
 
-
-
 input_img_list = [
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5b/SCENE01/2013_08_24_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2016_Spot7/Spot7_Syrdakh_BW.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/1989_07_16_Spot1b/SCENE01/1989_07_16_Spot1b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2011_07_30_Spot4/SCENE01/2011_07_30_Spot4.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_24_Spot5c/SCENE01/2013_08_24_Spot5c.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_30_Spot5/SCENE01/2013_08_30_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_09_02_Spot5/SCENE01/2013_09_02_Spot5.TIF',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
+'/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
 ]
-
-
-
 
 
 for file_path in input_img_list:
@@ -135,17 +110,94 @@ ny_out = 2048
 nx_in = 1024
 ny_in = 1024
 
+# model_list = [
+# "./trainings/5/MyTraining_019.pt",
+# "./trainings/5/MyTraining_028.pt",
+# "./trainings/5/MyTraining_038.pt",
+# "./trainings/5/MyTraining_047.pt",
+# "./trainings/5/MyTraining_057.pt",
+# "./trainings/5/MyTraining_085.pt",
+# ]
+
 model_list = [
-"./trainings/5/MyTraining_019.pt",
-"./trainings/5/MyTraining_028.pt",
-"./trainings/5/MyTraining_038.pt",
-"./trainings/5/MyTraining_047.pt",
-"./trainings/5/MyTraining_057.pt",
-"./trainings/5/MyTraining_085.pt",
+# "./trainings/6/MyTraining_001.pt",
+# "./trainings/6/MyTraining_002.pt",
+# "./trainings/6/MyTraining_003.pt",
+# "./trainings/6/MyTraining_004.pt",
+# "./trainings/6/MyTraining_005.pt",
+# "./trainings/6/MyTraining_006.pt",
+# "./trainings/6/MyTraining_007.pt",
+# "./trainings/6/MyTraining_008.pt",
+# "./trainings/6/MyTraining_009.pt",
+# "./trainings/6/MyTraining_010.pt",
+# "./trainings/6/MyTraining_011.pt",
+# "./trainings/6/MyTraining_012.pt",
+# "./trainings/6/MyTraining_013.pt",
+# "./trainings/6/MyTraining_014.pt",
+# "./trainings/6/MyTraining_015.pt",
+# "./trainings/6/MyTraining_016.pt",
+# "./trainings/6/MyTraining_017.pt",
+# "./trainings/6/MyTraining_018.pt",
+# "./trainings/6/MyTraining_019.pt",
+# "./trainings/6/MyTraining_020.pt",
+# "./trainings/6/MyTraining_021.pt",
+# "./trainings/6/MyTraining_022.pt",
+# "./trainings/6/MyTraining_023.pt",
+# "./trainings/6/MyTraining_024.pt",
+# "./trainings/6/MyTraining_025.pt",
+# "./trainings/6/MyTraining_026.pt",
+# "./trainings/6/MyTraining_027.pt",
+# "./trainings/6/MyTraining_028.pt",
+# "./trainings/6/MyTraining_029.pt",
+# "./trainings/6/MyTraining_030.pt",
+# "./trainings/6/MyTraining_031.pt",
+# "./trainings/6/MyTraining_032.pt",
+# "./trainings/6/MyTraining_033.pt",
+# "./trainings/6/MyTraining_034.pt",
+# "./trainings/6/MyTraining_035.pt",
+# "./trainings/6/MyTraining_036.pt",
+# "./trainings/6/MyTraining_037.pt",
+# "./trainings/6/MyTraining_038.pt",
+# "./trainings/6/MyTraining_039.pt",
+# "./trainings/6/MyTraining_040.pt",
+# "./trainings/6/MyTraining_041.pt",
+# "./trainings/6/MyTraining_042.pt",
+# "./trainings/6/MyTraining_043.pt",
+# "./trainings/6/MyTraining_044.pt",
+# "./trainings/6/MyTraining_045.pt",
+# "./trainings/6/MyTraining_046.pt",
+# "./trainings/6/MyTraining_047.pt",
+# "./trainings/6/MyTraining_048.pt",
+# "./trainings/6/MyTraining_049.pt",
+# "./trainings/6/MyTraining_050.pt",
+"./trainings/6/MyTraining_051.pt",
+"./trainings/6/MyTraining_052.pt",
+"./trainings/6/MyTraining_053.pt",
+"./trainings/6/MyTraining_054.pt",
+"./trainings/6/MyTraining_055.pt",
+"./trainings/6/MyTraining_056.pt",
+"./trainings/6/MyTraining_057.pt",
+"./trainings/6/MyTraining_058.pt",
+"./trainings/6/MyTraining_059.pt",
+"./trainings/6/MyTraining_060.pt",
+"./trainings/6/MyTraining_061.pt",
+"./trainings/6/MyTraining_062.pt",
+"./trainings/6/MyTraining_063.pt",
+"./trainings/6/MyTraining_064.pt",
+"./trainings/6/MyTraining_065.pt",
+"./trainings/6/MyTraining_066.pt",
+"./trainings/6/MyTraining_067.pt",
+"./trainings/6/MyTraining_068.pt",
+"./trainings/6/MyTraining_069.pt",
+"./trainings/6/MyTraining_070.pt",
+"./trainings/6/MyTraining_071.pt",
 ]
 
 # Keep_Img_plots = True
 Keep_Img_plots = False
+
+# mod_img_lara_fix = True
+mod_img_lara_fix = False
 
 n_input_img = len(input_img_list)
 
@@ -156,6 +208,13 @@ all_pred_folder = './all_predictions/'
 transfo_folder = './transformed_make_scenes/'
 transfo_masks_folder = transfo_folder+'Lakes_masks/'
 transfo_imgs_folder = transfo_folder+'Lakes_png_images/'
+
+
+mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
+mask[0:(nx_out//2),0:(ny_out//2)]=1
+PIL_mask = Image.fromarray(mask)
+PIL_mask = PIL_mask.resize(size=(nx_in,ny_in),resample=Image.NEAREST)
+PIL_mask.save(transfo_masks_folder+"/tmp_mask.png")
 
 
 i_img = 0
@@ -189,9 +248,10 @@ for file_path in input_img_list:
         print('ymin = ',ymin)
         print('ymax = ',ymax)
         
-        # fix for cropped images
-        print(img.dtype)
-        img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
+        if mod_img_lara_fix:
+            # fix for cropped images
+            print(img.dtype)
+            img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
 
         vals, count = np.unique(img , return_counts=True)
         
@@ -206,6 +266,8 @@ for file_path in input_img_list:
         # fig, ax = plt.subplots()
         # plt.bar(vals, count)
         # plt.savefig("bar.png")
+        
+        # print(1/0)
       
         
         img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
@@ -215,7 +277,6 @@ for file_path in input_img_list:
         img_new = img_new.astype(np.uint8)
         
         img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
-        # img_uint8 = np.where(img[0,:,:] == 256 ,np.uint8(0),img_uint8) # Fix for cropped images
 
         # vals, count = np.unique(img , return_counts=True)
         
@@ -290,24 +351,35 @@ for file_path in input_img_list:
                 xstart = xstart_list[istart]
                 ystart = ystart_list[istart]
 
-                ixmax = (nxtot-xstart)//nx_out
-                iymax = (nytot-ystart)//ny_out
+                # ixmax = (nxtot-xstart)//nx_out
+                # iymax = (nytot-ystart)//ny_out
+
+                ixmax = (nxtot-xstart)//nx_out  + 1
+                iymax = (nytot-ystart)//ny_out  + 1
 
                 for ix in range(ixmin,ixmax):
                     for iy in range(iymin,iymax):
                         
                         print(istart,istartmax,ix,ixmax,iy,iymax)
 
-                        img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
+                        # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
+                        
+                        xi = xstart+ix*nx_out
+                        xf = xstart+(ix+1)*nx_out
+                        yi = ystart+iy*ny_out
+                        yf = ystart+(iy+1)*ny_out
+                        img_uint8_small = np_safe_copy(img_uint8,xi,xf,yi,yf)
+                        
+                        
                         PIL_img = Image.fromarray(img_uint8_small)
                         PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
                         PIL_img.save(transfo_imgs_folder+"/tmp_img.png")
                         
-                        mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
-                        mask[0:(nx_out//2),0:(ny_out//2)]=1
-                        PIL_mask = Image.fromarray(mask)
-                        PIL_mask = PIL_mask.resize(size=(nx_in,ny_in),resample=Image.NEAREST)
-                        PIL_mask.save(transfo_masks_folder+"/tmp_mask.png")
+                        # mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
+                        # mask[0:(nx_out//2),0:(ny_out//2)]=1
+                        # PIL_mask = Image.fromarray(mask)
+                        # PIL_mask = PIL_mask.resize(size=(nx_in,ny_in),resample=Image.NEAREST)
+                        # PIL_mask.save(transfo_masks_folder+"/tmp_mask.png")
                         
                         
                         dataset_test = LakesDataset(transfo_folder, get_transform(train=False))
@@ -328,8 +400,8 @@ for file_path in input_img_list:
                         
                         npoly = all_masks.shape[0]
                         print('npoly = ',npoly)
-                        
-                        mask_no_col = np.zeros((nx_out,ny_out),dtype=np.uint8)
+
+                        mask_no_col = np.zeros((nx_in,nx_in),dtype=np.uint8)
                         
                         npoly_real = 0
                         
@@ -337,13 +409,9 @@ for file_path in input_img_list:
 
                         for ipoly in range(npoly):
 
-                            all_masks_ipoly = np.copy(all_masks[ipoly,0,:,:].detach().cpu().numpy())
-                            all_masks_ipoly_PIL = Image.fromarray(all_masks_ipoly)
-                            all_masks_ipoly_PIL = all_masks_ipoly_PIL.resize(size=(nx_out,ny_out),resample=Image.BICUBIC)
-                            all_masks_ipoly = torch.from_numpy(np.array(all_masks_ipoly_PIL).reshape((1,nx_out,ny_out)))
-                            MA = torch.where(all_masks_ipoly > thresh,1,0).reshape((nx_out,ny_out)).detach().cpu().numpy().astype(np.uint8)
+                            MA = torch.where(all_masks[ipoly,0,:,:] > thresh,1,0).reshape((nx_in,nx_in)).detach().cpu().numpy().astype(np.uint8)
                             
-                            poly_collisions = np.where(MA,mask_no_col,0).astype(np.uint8).reshape((nx_out,ny_out))
+                            poly_collisions = np.where(MA,mask_no_col,0).astype(np.uint8).reshape((nx_in,nx_in))
                             
                             partial_class = set(np.unique(poly_collisions))
                             partial_class.remove(0)
@@ -358,15 +426,15 @@ for file_path in input_img_list:
                             eq_classes = [ the_class for the_class in eq_classes if not(partial_class.intersection(the_class))]
                             eq_classes.append(partial_class)
                             
-                            mask_no_col = np.where(MA,(ipoly+1),mask_no_col).astype(np.uint8).reshape((nx_out,ny_out))
+                            mask_no_col = np.where(MA,(ipoly+1),mask_no_col).astype(np.uint8).reshape((nx_in,nx_in))
 
-                        class_mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
+                        class_mask = np.zeros((nx_in,nx_in),dtype=np.uint8)
                         
                         for iclass in range(len(eq_classes)):
                             
                             for jpoly in eq_classes[iclass]:
                             
-                                to_add = np.where(mask_no_col == jpoly ,(iclass+1),0).astype(np.uint8).reshape((nx_out,ny_out))
+                                to_add = np.where(mask_no_col == jpoly ,(iclass+1),0).astype(np.uint8).reshape((nx_in,nx_in))
                                 
                                 overlap = np.sum(to_add*class_mask)
                                 
@@ -377,6 +445,10 @@ for file_path in input_img_list:
                         
                         n_poly_no_col = len(eq_classes)
                         
+                        class_mask_PIL = Image.fromarray(class_mask)
+                        class_mask_PIL = class_mask_PIL.resize(size=(nx_out,ny_out),resample=Image.NEAREST)
+                        class_mask = np.array(class_mask_PIL).reshape((nx_out,ny_out))
+
                         print('npoly without collisions = ',n_poly_no_col)    
                         
                         if (n_poly_no_col > 0):
@@ -386,8 +458,7 @@ for file_path in input_img_list:
                             
                             the_win = rio.windows.Window((ystart+(iy)*ny_out),(xstart+(ix)*nx_out),ny_out,nx_out)
                             the_transform = img_open.window_transform(the_win)
-            
-                            # the_polys = rio.features.shapes(class_mask, transform=img_open.transform)
+
                             the_polys = rio.features.shapes(class_mask, transform=the_transform)
                             
                             for shapedict, value in the_polys:
@@ -424,7 +495,7 @@ for file_path in input_img_list:
 
             for file_path in os.listdir(output_poly_folder):
                 file_path = os.path.join(output_poly_folder, file_path)
-                file_root, file_ext = os.path.splitext(os.path.basename(file_path))
+                the_file_root, file_ext = os.path.splitext(os.path.basename(file_path))
                 
                 if (file_ext == '.shp' ):
                     

@@ -175,15 +175,17 @@ def get_model_instance_segmentation(num_classes):
     
     
     
-    
+    # pretrained = True
+    pretrained = False
     
     # load an instance segmentation model pre-trained pre-trained on COCO
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
-    # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True,rpn_nms_thresh =rpn_nms_thresh,rpn_score_thresh=rpn_score_thresh)
+    # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+    
+    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=pretrained, pretrained_backbone=pretrained, trainable_backbone_layers=5)
 
+    
     for param in model.parameters():
-        param.require_grad=False
-        # param.require_grad=True
+        param.require_grad=not(pretrained)
 
 
     # get number of input features for the classifier
@@ -215,8 +217,8 @@ def main():
     # device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     device = torch.device('cuda')
 
-    # num_workers = 1
-    num_workers = 4
+    num_workers = 1
+    # num_workers = 4
     
     # our dataset has two classes only for now - background and lakes
     num_classes = 2
@@ -278,16 +280,9 @@ def main():
         collate_fn=utils.collate_fn)
 
     # # get the model using our helper function
-    model = get_model_instance_segmentation(num_classes)
+    # model = get_model_instance_segmentation(num_classes)
 
-    # model = torch.load("./MyTraining_10.pt")
-    # model = torch.load("./MyTraining_20.pt")
-    # model = torch.load("./MyTraining_50.pt")
-
-
-    for param in model.parameters():
-        # param.require_grad=False
-        param.require_grad=True
+    model = torch.load("./trainings/5/MyTraining_057.pt")
 
 
     # move model to the right device
@@ -295,10 +290,12 @@ def main():
 
     # construct an optimizer
     params = [p for p in model.parameters() if p.requires_grad]
-    # optimizer = torch.optim.SGD(params, lr=0.001,momentum=0.9, weight_decay=0.0005)
+    # params = [p for p in model.parameters()]
+
+    optimizer = torch.optim.SGD(params, lr=0.0001,momentum=0.9, weight_decay=0.005)
     # optimizer = torch.optim.SGD(params, lr=0.002,momentum=0.9, weight_decay=0)
     
-    optimizer = torch.optim.Adam(params, lr=0.0003)
+    # optimizer = torch.optim.Adam(params, lr=0.0003)
     
     
     # and a learning rate scheduler

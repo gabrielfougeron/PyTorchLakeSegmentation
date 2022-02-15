@@ -23,6 +23,26 @@ from torch.utils.tensorboard import SummaryWriter
 import matplotlib.pyplot as plt
 from matplotlib import patches,  lines
 
+def np_safe_copy(array_in,xi,xf,yi,yf):
+    
+    array_out = np.zeros((xf-xi,yf-yi),dtype=array_in.dtype)
+    
+    the_xi = max(0,xi)
+    the_xf = min(array_in.shape[0],xf)
+    
+    the_yi = max(0,yi)
+    the_yf = min(array_in.shape[1],yf)
+    
+    x_out_start = the_xi - xi
+    x_out_end = the_xf - xi
+    
+    y_out_start = the_yi - yi
+    y_out_end = the_yf - yi
+    
+    array_out[x_out_start:x_out_end,y_out_start:y_out_end] = array_in[the_xi:the_xf,the_yi:the_yf]
+    
+    return array_out
+
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq,summary):
     model.train()
