@@ -4,12 +4,18 @@
 import os
 import copy
 import numpy as np
+
+# os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:256'
+
+
 import torch
 from PIL import Image
 
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
+
+# from adamp import AdamP
 
 from engine import train_one_epoch, evaluate
 from torch.utils.tensorboard import SummaryWriter
@@ -44,7 +50,11 @@ class LakesDataset(object):
                 img_path = os.path.join(self.root, "Lakes_png_images", self.imgs[idx])
                 mask_path = os.path.join(self.root, "Lakes_masks", self.masks[idx])
                 
-                img = Image.open(img_path)
+                # img = Image.open(img_path)
+                img = Image.open(img_path).convert("RGB")
+                
+                # print('a')
+                # print(img.size)
                 
                 # print(img_path)
                 
@@ -134,7 +144,8 @@ class LakesDataset_test(object):
     def __getitem__(self, idx):
         # load images and masks
         img_path = os.path.join(self.root, "Lakes_test", self.imgs[idx])
-        img = Image.open(img_path)
+        # img = Image.open(img_path)
+        img = Image.open(img_path).convert("RGB")
         
         target = img # fake target
         
@@ -175,8 +186,8 @@ def get_model_instance_segmentation(num_classes):
     
     
     
-    # pretrained = True
-    pretrained = False
+    pretrained = True
+    # pretrained = False
     
     # load an instance segmentation model pre-trained pre-trained on COCO
     # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
@@ -185,7 +196,8 @@ def get_model_instance_segmentation(num_classes):
 
     
     for param in model.parameters():
-        param.require_grad=not(pretrained)
+        # param.requires_grad_(not(pretrained))
+        param.requires_grad_(True)
 
 
     # get number of input features for the classifier
@@ -206,9 +218,9 @@ def get_model_instance_segmentation(num_classes):
 def get_transform(train):
     transforms = []
     transforms.append(T.ToTensor())
-    if train:
-        transforms.append(T.RandomHorizontalFlip(0.5))
-        transforms.append(T.RandomVerticalFlip(0.5))
+    # if train:
+        # transforms.append(T.RandomHorizontalFlip(0.5))
+        # transforms.append(T.RandomVerticalFlip(0.5))
     return T.Compose(transforms)
 
 
@@ -217,8 +229,9 @@ def main():
     # device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     device = torch.device('cuda')
 
-    num_workers = 1
+    # num_workers = 1
     # num_workers = 4
+    num_workers = 2
     
     # our dataset has two classes only for now - background and lakes
     num_classes = 2
@@ -242,8 +255,9 @@ def main():
     else:
 
         n_data = len(dataset)   
+        n_eval = 0
         # n_eval = int(n_data / 5)
-        n_eval = int(n_data / 10)
+        # n_eval = int(n_data / 10)
 
         # split the dataset in train and test set
         indices = torch.randperm(n_data).tolist()
@@ -282,20 +296,45 @@ def main():
     # # get the model using our helper function
     # model = get_model_instance_segmentation(num_classes)
 
-    model = torch.load("./trainings/5/MyTraining_057.pt")
+    model = torch.load("./trainings/3_RGB_ADAM/MyTraining_025.pt")
 
 
     # move model to the right device
     model.to(device)
 
+
+
+    for param in model.parameters():
+        param.requires_grad_(True)
+
+
     # construct an optimizer
     params = [p for p in model.parameters() if p.requires_grad]
     # params = [p for p in model.parameters()]
+    
+    
+    print(len(params))
+    tot_nparam = 0
+    for i in range(len(params)):
+        tot_nparam += int(params[i].numel())
+        
+    print(f'Total numbers of parameters : {tot_nparam}')
+    
+    # print(model)
+    
+    # print(1/0)
 
-    optimizer = torch.optim.SGD(params, lr=0.0001,momentum=0.9, weight_decay=0.005)
+
+    # optimizer = torch.optim.SGD(params, lr=0.0001,momentum=0.9, weight_decay=0.005)
     # optimizer = torch.optim.SGD(params, lr=0.002,momentum=0.9, weight_decay=0)
     
-    # optimizer = torch.optim.Adam(params, lr=0.0003)
+    optimizer = torch.optim.Adam(params, lr=0.0003)
+    # optimizer = torch.optim.Adam(params, lr=0.00003)
+    
+    
+    # optimizer = torch.optim.NAdam(params, lr=0.00005)
+    # optimizer = torch.optim.RAdam(params, lr=0.00005)
+    # optimizer = AdamP(params, lr=0.00005)
     
     
     # and a learning rate scheduler
@@ -303,18 +342,18 @@ def main():
     # lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=25,gamma=0.9)
 
 
-    num_epochs = 100
+    num_epochs = 50
     
     summary = SummaryWriter()
 
     for epoch in range(num_epochs):
         
-        print_freq = 30
+        print_freq = 300
         train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq,summary)
         # update the learning rate
         lr_scheduler.step()
         # evaluate on the test dataset
-        evaluate(model, data_loader_test, device,epoch, print_freq,summary)
+        # evaluate(model, data_loader_test, device,epoch, print_freq,summary)
         
         summary.flush()
         
@@ -323,11 +362,12 @@ def main():
         if ((epoch % save_freq) == 0):
             
             n_save = epoch//save_freq
-            torch.save(model, "./MyTraining_"+str(n_save).zfill(3)+".pt")
+            # torch.save(model, "./MyTraining_"+str(n_save).zfill(3)+".pt")
+            torch.save(model, "./Restart_"+str(n_save).zfill(3)+".pt")
             
             
             
-    torch.save(model, "./MyTraining_final.pt")
+    # torch.save(model, "./MyTraining_final.pt")
 
     
     summary.close()

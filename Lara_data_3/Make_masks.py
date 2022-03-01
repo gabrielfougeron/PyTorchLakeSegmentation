@@ -48,7 +48,7 @@ def random_colors(N, bright=True):
     random.shuffle(colors)
     return colors
 
-
+'''
 
 
 # init_image = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF'
@@ -71,7 +71,7 @@ img_name_id = '2012_09_25'
 # init_lake_bou = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp'
 # img_name_id = '2016_Spot7'
 
-
+'''
 
 init_image_list = [
 '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
@@ -87,6 +87,19 @@ init_lake_bou_list = [
 '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp',
 ]
 
+img_name_id_list = [
+'2010_10_03_N',
+'2010_10_03_S',
+'2012_09_25',
+'2016_Spot7',
+]
+
+mod_img_lara_fix_list = [
+True,
+True,
+False,
+False,
+]
 
 output_masks_folder = './output/Lakes_masks'
 output_imgs_folder = './output/Lakes_png_images'
@@ -104,18 +117,27 @@ for store_folder in [output_masks_folder,output_imgs_folder,output_render_folder
 nx_out = 1024
 ny_out = 1024
 
-scale_min = 1.
-scale_max = 3.
+scale_min = 1.7
+scale_max = 2.5
+
+# brightness_coeff_min = 0.8
+# brightness_coeff_max = 1.3
+
+brightness_coeff_min = 1.0
+brightness_coeff_max = 1.0
 
 # target_mean = 127
 target_mean = 120
 target_stddev = 40
 # target_stddev = 20
 
-n_img_output = 5000
+n_img_output = 2500
 
-mod_img_lara_fix = False
-# mod_img_lara_fix = True
+
+# target_mean = 127
+target_mean = 120
+target_stddev = 40
+# target_stddev = 20
 
 
 
@@ -124,8 +146,8 @@ for i_img in range(len(init_image_list)):
     
     init_image = init_image_list[i_img]
     init_lake_bou = init_lake_bou_list[i_img]
+    img_name_id = img_name_id_list[i_img]
     
-
     print('Image path :')
     print(init_image)
 
@@ -150,13 +172,16 @@ for i_img in range(len(init_image_list)):
         print('ymin = ',ymin)
         print('ymax = ',ymax)
         
-        if mod_img_lara_fix:
+        if mod_img_lara_fix_list[i_img]:
             # fix for cropped images
             print(img.dtype)
             img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
 
         vals, count = np.unique(img , return_counts=True)
         
+        # print(vals)
+        # print(count)
+
         vals = vals[1:]
         count = count[1:]
         
@@ -205,6 +230,7 @@ for i_img in range(len(init_image_list)):
         del overlap_polys
         
         gc.collect()
+
         
         
 
@@ -232,9 +258,7 @@ for i_img in range(len(init_image_list)):
         sub_poly_img = np.copy(poly_img[ixmin:ixmax,iymin:iymax])
         
         rot_angle = 360*random.random()
-        
-        brightness_coeff_min = 0.7
-        brightness_coeff_max = 1.5
+
         brightness_coeff = brightness_coeff_min + (brightness_coeff_max - brightness_coeff_min) * random.random()
         
         sub_img_rot = (ndimage.rotate(sub_img,rot_angle,reshape=False,order=3) * brightness_coeff).astype(np.uint8)
@@ -305,6 +329,7 @@ for i_img in range(len(init_image_list)):
             PIL_mask.save(msk_out_filename)
             
         print("")
+
 
 
 print('')

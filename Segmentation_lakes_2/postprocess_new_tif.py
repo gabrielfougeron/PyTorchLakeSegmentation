@@ -38,7 +38,8 @@ def main():
     
     eval_images_folder = "./eval_images"
     
-    train_folder = "./trainings/5"
+    # train_folder = "./trainings/2_AdamP"
+    train_folder = "./trainings/3_RGB_ADAM"
         
     tmp_folder = './tmp/'
     transfo_folder = './transformed/'
@@ -57,6 +58,10 @@ def main():
     input_image_folder = '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/'
     
 
+    # target_mean = 127
+    target_mean = 120
+    target_stddev = 40
+    # target_stddev = 20
 
     thresh = 0.5
     
@@ -109,9 +114,10 @@ def main():
             model_list.append([model_path,model_root])
     
     
-    model_list_idx = [19,28,38,47,57,85]
+    # model_list_idx = [19,28,38,47,57,85]
+    # model_list_idx = [15]
     
-    model_list = [model_list[i] for i in model_list_idx]
+    # model_list = [model_list[i] for i in model_list_idx]
     
     # model_list = model_list[11:]
     # model_list = model_list[21:]
@@ -124,7 +130,10 @@ def main():
 
 
     if PlotExact :
-        
+    
+        data_loader_test = torch.utils.data.DataLoader(
+            dataset_test, batch_size=1, shuffle=False, num_workers=1,
+            collate_fn=utils.collate_fn)
 
         plot_exact(data_loader_test,output_folder=tmp_folder)
         
@@ -143,58 +152,73 @@ def main():
         
     else:
         
-        for the_model in model_list:
+
+        i_img = 0
+        
+        for file_path in input_img_list:
+            file_p = os.path.join(input_image_folder, file_path)
+            file_root, file_ext = os.path.splitext(os.path.basename(file_p))
             
-            model_path = the_model[0]
-            model_root = the_model[1]
-            
-            print(model_path)
+            i_img = i_img + 1
+            print('')
+            print('----------------------------------------------')
+            print('')   
+            print('Processing image '+str(i_img)+" of "+str(n_input_img))
+            print(file_root)
             
 
-            model = torch.load(model_path)
+            # Open raster image
+            with rio.open(file_p) as img_open:
+                img = img_open.read()
+                            
 
-            # move model to the right device
-            model.to(device)
-            
-            i_img = 0
-            
-            for file_path in input_img_list:
-                file_p = os.path.join(input_image_folder, file_path)
-                file_root, file_ext = os.path.splitext(os.path.basename(file_p))
+                vals, count = np.unique(img , return_counts=True)
                 
-                i_img = i_img + 1
-                print('')
-                print('----------------------------------------------')
-                print('')   
-                print('Processing image '+str(i_img)+" of "+str(n_input_img))
-                print(file_root)
+                vals = vals[1:]
+                count = count[1:]
                 
+                mean = np.sum(vals*count)/np.sum(count)
+                stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+              
+                
+                img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+                
+                img_new = np.where(img_new > 255.,255.,img_new)
+                img_new = np.where(img_new < 0.,0.,img_new)
+                img_new = img_new.astype(np.uint8)
+                
+                img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
 
-                # Open raster image
-                with rio.open(file_p) as img_open:
-                    img = img_open.read()
-                    print("image loaded")
-                    # img_uint8 = ((img[0,:,:]//4)).astype(np.uint8)
-                    # img_uint8 = ((img[0,:,:]//2)).astype(np.uint8)
-                    # img_uint8 = ((img[0,:,:]*2.5)).astype(np.uint8)
-                    img_uint8 = ((img[0,:,:]*1.8)).astype(np.uint8)
+                del img
+                print("image loaded")
+                
+                nxtot = img_uint8.shape[0]
+                nytot = img_uint8.shape[1]
+                print('nxtot = ',nxtot)
+                print('nytot = ',nytot)
                     
-                    del img
-                    
-                    
-                    nxtot = img_uint8.shape[0]
-                    nytot = img_uint8.shape[1]
-                    print('nxtot = ',nxtot)
-                    print('nytot = ',nytot)
-                        
-                    BB = plotting_extent(img_open)
-                    xmin,xmax,ymin,ymax = plotting_extent(img_open)
-                    # xmin,ymin,xmax,ymax = img_open.bounds
-                    print('xmin = ',xmin)
-                    print('xmax = ',xmax)
-                    print('ymin = ',ymin)
-                    print('ymax = ',ymax)
+                BB = plotting_extent(img_open)
+                xmin,xmax,ymin,ymax = plotting_extent(img_open)
+                # xmin,ymin,xmax,ymax = img_open.bounds
+                print('xmin = ',xmin)
+                print('xmax = ',xmax)
+                print('ymin = ',ymin)
+                print('ymax = ',ymax)
 
+                
+                
+                for the_model in model_list:
+                    
+                    model_path = the_model[0]
+                    model_root = the_model[1]
+                    
+                    print(model_path)
+                    
+
+                    model = torch.load(model_path)
+
+                    # move model to the right device
+                    model.to(device)
                     
                     # xstart_list = [0,nx_out//2]
                     # ystart_list = [0,ny_out//2]
@@ -216,6 +240,12 @@ def main():
 
                         ixmax = (nxtot-xstart)//nx_out
                         iymax = (nytot-ystart)//ny_out
+                            
+                        ixmin = 9
+                        iymin = 8
+
+                        ixmax = 11
+                        iymax = 11
                     
                         for ix in range(ixmin,ixmax):
                             for iy in range(iymin,iymax):
@@ -260,20 +290,22 @@ def main():
                                 
                                 all_masks = get_one_mask_and_plot(model, data_loader_test, device=device,image_output_filename=output_img_filename,thresh=thresh)
                                 
-                                
-            del model
-            
-            for file_path in os.listdir(tmp_folder):
-                file_path = os.path.join(tmp_folder, file_path)
-                file_root, file_ext = os.path.splitext(os.path.basename(file_path))
+                                        
+                    del model
+                    
+                    # print(1/0)
+                    
+                    for file_path in os.listdir(tmp_folder):
+                        file_path = os.path.join(tmp_folder, file_path)
+                        the_file_root, file_ext = os.path.splitext(os.path.basename(file_path))
 
-                store_folder = eval_images_folder+'/'+file_root+'/'
-                if not(os.path.isdir(store_folder)):
-                    os.makedirs(store_folder)
+                        store_folder = eval_images_folder+'/'+the_file_root+'/'
+                        if not(os.path.isdir(store_folder)):
+                            os.makedirs(store_folder)
 
-                dst = store_folder+model_root+".png"
+                        dst = store_folder+model_root+".png"
 
-                shutil.copyfile(file_path, dst)
+                        shutil.copyfile(file_path, dst)
 
 
     print("That's it!")

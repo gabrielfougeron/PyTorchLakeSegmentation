@@ -21,11 +21,13 @@ import fiona
 import shapely
 import rasterstats
 
+import shutil
+
 
 import warnings
 
 import torch
-from PIL import Image
+from PIL import Image,ImageFilter
 
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
@@ -37,44 +39,49 @@ import transforms as T
 
 from tv_training_code import *
 
+
 device = torch.device('cuda')
+
+
 
 
 # List of small images => nx_out = 1024
 # input_img_list = [
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2010_09_23_Spot4/SCENE01/2010_09_23_Spot4.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2010_09_26_Spot4/130-01_4_286220_10-09-26-0238221M0/SCENE01/2010-09-26_Spot4.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2010_09_26_Spot4c/SCENE01/2010_09_26_Spot4c.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2010_09_23_Spot4/SCENE01/2010_09_23_Spot4.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2010_09_26_Spot4/130-01_4_286220_10-09-26-0238221M0/SCENE01/2010-09-26_Spot4.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2010_09_26_Spot4c/SCENE01/2010_09_26_Spot4c.TIF',
 # ]
 
 # List of big images => nx_out = 2048
-# input_img_list = [
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5b/SCENE01/2013_08_24_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2016_Spot7/Spot7_Syrdakh_BW.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/1989_07_16_Spot1b/SCENE01/1989_07_16_Spot1b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2011_07_30_Spot4/SCENE01/2011_07_30_Spot4.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_24_Spot5c/SCENE01/2013_08_24_Spot5c.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_30_Spot5/SCENE01/2013_08_30_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_09_02_Spot5/SCENE01/2013_09_02_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
-# ]
-
 input_img_list = [
-'/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
+# '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
+'/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5b/SCENE01/2013_08_24_Spot5b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2016_Spot7/Spot7_Syrdakh_BW.tif',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/1989_07_16_Spot1b/SCENE01/1989_07_16_Spot1b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2011_07_30_Spot4/SCENE01/2011_07_30_Spot4.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_08_24_Spot5c/SCENE01/2013_08_24_Spot5c.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_08_30_Spot5/SCENE01/2013_08_30_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_09_02_Spot5/SCENE01/2013_09_02_Spot5.TIF',
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/Archive/C1980_test2.tif',
+'/mnt/c/GeoData/Polygon_Annotations/2011_09_08_Spot5/56-01_5_289222_11-09-08-0213592B0/SCENE01/2011_09_08_Spot5.TIF',
 ]
+
+# input_img_list = [
+# '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
+# ]
 
 
 for file_path in input_img_list:
@@ -84,8 +91,13 @@ for file_path in input_img_list:
 
 
 # target_mean = 127
-target_mean = 120
-target_stddev = 40
+# target_mean = 160
+target_mean = 140
+# target_stddev = 40
+# target_stddev = 90
+target_stddev = 60
+# target_stddev = 120
+# target_stddev = 140
 # target_stddev = 20
 
 
@@ -110,94 +122,19 @@ ny_out = 2048
 nx_in = 1024
 ny_in = 1024
 
-# model_list = [
-# "./trainings/5/MyTraining_019.pt",
-# "./trainings/5/MyTraining_028.pt",
-# "./trainings/5/MyTraining_038.pt",
-# "./trainings/5/MyTraining_047.pt",
-# "./trainings/5/MyTraining_057.pt",
-# "./trainings/5/MyTraining_085.pt",
-# ]
 
 model_list = [
-# "./trainings/6/MyTraining_001.pt",
-# "./trainings/6/MyTraining_002.pt",
-# "./trainings/6/MyTraining_003.pt",
-# "./trainings/6/MyTraining_004.pt",
-# "./trainings/6/MyTraining_005.pt",
-# "./trainings/6/MyTraining_006.pt",
-# "./trainings/6/MyTraining_007.pt",
-# "./trainings/6/MyTraining_008.pt",
-# "./trainings/6/MyTraining_009.pt",
-# "./trainings/6/MyTraining_010.pt",
-# "./trainings/6/MyTraining_011.pt",
-# "./trainings/6/MyTraining_012.pt",
-# "./trainings/6/MyTraining_013.pt",
-# "./trainings/6/MyTraining_014.pt",
-# "./trainings/6/MyTraining_015.pt",
-# "./trainings/6/MyTraining_016.pt",
-# "./trainings/6/MyTraining_017.pt",
-# "./trainings/6/MyTraining_018.pt",
-# "./trainings/6/MyTraining_019.pt",
-# "./trainings/6/MyTraining_020.pt",
-# "./trainings/6/MyTraining_021.pt",
-# "./trainings/6/MyTraining_022.pt",
-# "./trainings/6/MyTraining_023.pt",
-# "./trainings/6/MyTraining_024.pt",
-# "./trainings/6/MyTraining_025.pt",
-# "./trainings/6/MyTraining_026.pt",
-# "./trainings/6/MyTraining_027.pt",
-# "./trainings/6/MyTraining_028.pt",
-# "./trainings/6/MyTraining_029.pt",
-# "./trainings/6/MyTraining_030.pt",
-# "./trainings/6/MyTraining_031.pt",
-# "./trainings/6/MyTraining_032.pt",
-# "./trainings/6/MyTraining_033.pt",
-# "./trainings/6/MyTraining_034.pt",
-# "./trainings/6/MyTraining_035.pt",
-# "./trainings/6/MyTraining_036.pt",
-# "./trainings/6/MyTraining_037.pt",
-# "./trainings/6/MyTraining_038.pt",
-# "./trainings/6/MyTraining_039.pt",
-# "./trainings/6/MyTraining_040.pt",
-# "./trainings/6/MyTraining_041.pt",
-# "./trainings/6/MyTraining_042.pt",
-# "./trainings/6/MyTraining_043.pt",
-# "./trainings/6/MyTraining_044.pt",
-# "./trainings/6/MyTraining_045.pt",
-# "./trainings/6/MyTraining_046.pt",
-# "./trainings/6/MyTraining_047.pt",
-# "./trainings/6/MyTraining_048.pt",
-# "./trainings/6/MyTraining_049.pt",
-# "./trainings/6/MyTraining_050.pt",
-"./trainings/6/MyTraining_051.pt",
-"./trainings/6/MyTraining_052.pt",
-"./trainings/6/MyTraining_053.pt",
-"./trainings/6/MyTraining_054.pt",
-"./trainings/6/MyTraining_055.pt",
-"./trainings/6/MyTraining_056.pt",
-"./trainings/6/MyTraining_057.pt",
-"./trainings/6/MyTraining_058.pt",
-"./trainings/6/MyTraining_059.pt",
-"./trainings/6/MyTraining_060.pt",
-"./trainings/6/MyTraining_061.pt",
-"./trainings/6/MyTraining_062.pt",
-"./trainings/6/MyTraining_063.pt",
-"./trainings/6/MyTraining_064.pt",
-"./trainings/6/MyTraining_065.pt",
-"./trainings/6/MyTraining_066.pt",
-"./trainings/6/MyTraining_067.pt",
-"./trainings/6/MyTraining_068.pt",
-"./trainings/6/MyTraining_069.pt",
-"./trainings/6/MyTraining_070.pt",
-"./trainings/6/MyTraining_071.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
 ]
+
 
 # Keep_Img_plots = True
 Keep_Img_plots = False
 
-# mod_img_lara_fix = True
-mod_img_lara_fix = False
+mod_img_lara_fix = True
+# mod_img_lara_fix = False
 
 n_input_img = len(input_img_list)
 
@@ -258,6 +195,8 @@ for file_path in input_img_list:
         vals = vals[1:]
         count = count[1:]
         
+        print(vals)
+        
         mean = np.sum(vals*count)/np.sum(count)
         stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
       
@@ -308,8 +247,8 @@ for file_path in input_img_list:
         
         filename_path_save = base_img_folder+'img_path.txt'
         
-        if os.path.isfile(filename_path_save):
-            raise ValueError(f'File {filename_path_save} already exists')
+        # if os.path.isfile(filename_path_save):
+            # raise ValueError(f'File {filename_path_save} already exists')
         
         with open(filename_path_save, 'w') as outfile:
             outfile.write(file_path)
@@ -317,11 +256,11 @@ for file_path in input_img_list:
         for the_model in model_list:
             
             the_basename = os.path.basename(the_model)
-            root,ext = os.path.splitext(the_basename)
+            model_root,ext = os.path.splitext(the_basename)
             
-            print(root,ext)
+            print(model_root,ext)
             
-            base_model_folder =base_poly_mul_folder+root+'/'
+            base_model_folder =base_poly_mul_folder+model_root+'/'
 
             output_poly_folder = base_model_folder +'polygons/'
             output_fused_poly_folder = base_model_folder+'fused_polygons/'
@@ -339,6 +278,9 @@ for file_path in input_img_list:
 
             xstart_list = [0,nx_out//2]
             ystart_list = [0,ny_out//2]
+
+            # xstart_list = [0]
+            # ystart_list = [0]
             
             istartmin = 0
             istartmax = len(xstart_list)
@@ -351,16 +293,19 @@ for file_path in input_img_list:
                 xstart = xstart_list[istart]
                 ystart = ystart_list[istart]
 
-                # ixmax = (nxtot-xstart)//nx_out
-                # iymax = (nytot-ystart)//ny_out
-
                 ixmax = (nxtot-xstart)//nx_out  + 1
                 iymax = (nytot-ystart)//ny_out  + 1
+
+                # ixmin = 3
+                # iymin = 3
+                # ixmax = 5
+                # iymax = 5
+
 
                 for ix in range(ixmin,ixmax):
                     for iy in range(iymin,iymax):
                         
-                        print(istart,istartmax,ix,ixmax,iy,iymax)
+                        print(model_root,' ',istart,istartmax,ix,ixmax,iy,iymax)
 
                         # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
                         
@@ -373,6 +318,12 @@ for file_path in input_img_list:
                         
                         PIL_img = Image.fromarray(img_uint8_small)
                         PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
+                        
+                        
+                        # PIL_img = PIL_img.filter(ImageFilter.BLUR)
+                        # PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
+                        
+                        
                         PIL_img.save(transfo_imgs_folder+"/tmp_img.png")
                         
                         # mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
@@ -621,6 +572,10 @@ for file_path in input_img_list:
                 pass
 
 
+            shutil.rmtree(output_poly_folder)
+        
+        
+        
         # All model predictions done.
         # Now aggregate different predictions
 
@@ -639,7 +594,7 @@ for file_path in input_img_list:
             lake_outline_match=lake_outlines.to_crs(img_open.crs)
 
             npoly = lake_outline_match['geometry'].shape[0]
-            print('npoly = ',npoly)
+            print(the_training_folder,' npoly = ',npoly)
 
             MA,T,_ = rio.mask.raster_geometry_mask(img_open, lake_outline_match['geometry'], all_touched=False, invert=True)
             
@@ -676,7 +631,7 @@ for file_path in input_img_list:
                     npoly += 1 
             
             
-            print('npoly = ',npoly)
+            print(i,'npoly = ',npoly)
             
             # build the gdf object over the two lists
             gdf = gpd.GeoDataFrame(
