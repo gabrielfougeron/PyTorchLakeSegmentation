@@ -9,7 +9,7 @@ import math
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
+import matplotlib as mpl
 import geopandas as gpd
 import rasterio as rio
 from rasterio.plot import plotting_extent
@@ -62,33 +62,21 @@ def bar_plot(ax, labels,data, colors=None, total_width=0.8, single_width=1):
 
 
 
-### TRAINING DATA ###
-
-# input_img_list = [
-# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
-# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
-# '/mnt/c/GeoData/training_gab_01_23_2022/2012_09_25/SCENE01/2012_09_25_Spot5.TIF',
-# '/mnt/c/GeoData/training_gab_01_23_2022/2016_Spot7/Spot7_Syrdakh_BW.tif',
-# ]
-
-# reference_shp_list = [
-# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03_North_clipB.shp',
-# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/2010_10_03_lakes_clipped.shp',
-# '/mnt/c/GeoData/Exact_Lakes/2012-09-25/2012_09_25_lakes.shp',
-# '/mnt/c/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp',
-# ]
-
-
-
-### VALIDATION DATA ###
+### TEST DATA ###
 
 input_img_list = [
-'/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
+'/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
 ]
 
 reference_shp_list = [
-'/mnt/c/GeoData/Test_ref_shapefile_2013_07_14_lakes/2013_07_14_lakes.shp',
+# '/mnt/c/GeoData/test_fake_polys/area/1_convex_area.shp',
+'/mnt/c/GeoData/test_fake_polys/area/3_shapes_area.shp',
 ]
+
+
+
+
+
 
 
 for file_path in input_img_list:
@@ -105,18 +93,26 @@ ny_in = 1024
 
 n_input_img = len(input_img_list)
 
-all_pred_folder = './all_predictions/'
+all_pred_folder = './all_predictions_test/'
 
 transfo_folder = './transformed_make_scenes/'
 transfo_masks_folder = transfo_folder+'Lakes_masks/'
 transfo_imgs_folder = transfo_folder+'Lakes_png_images/'
 
 
-# Aggregated_predictions = True
-Aggregated_predictions = False 
+mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
+mask[0:(nx_out//2),0:(ny_out//2)]=1
+PIL_mask = Image.fromarray(mask)
+PIL_mask = PIL_mask.resize(size=(nx_in,ny_in),resample=Image.NEAREST)
+PIL_mask.save(transfo_masks_folder+"/tmp_mask.png")
 
-Initial_predictions = True
-# Initial_predictions = False
+
+
+Aggregated_predictions = True
+# Aggregated_predictions = False 
+
+# Initial_predictions = True
+Initial_predictions = False
 
 
 
@@ -148,15 +144,11 @@ for i_img in range(len(input_img_list)):
     # Open raster image
     with rio.open(file_path) as img_open:
         img = img_open.read()
-           
-        print("Image shape : ",img.shape)
             
         nx_img = img.shape[1]
         ny_img = img.shape[2]
         print('nx = ',nx_img)
         print('ny = ',ny_img)
-        total_image_pxl = nx_img*ny_img
-        print(f'total_image_pxl : {total_image_pxl}')
                 
         BB = plotting_extent(img_open)
         xmin,xmax,ymin,ymax = plotting_extent(img_open)
@@ -165,9 +157,6 @@ for i_img in range(len(input_img_list)):
         print('xmax = ',xmax)
         print('ymin = ',ymin)
         print('ymax = ',ymax)
-        
-        total_image_area = (xmax-xmin)*(ymax-ymin)
-        
         
         del img
 
@@ -184,15 +173,13 @@ for i_img in range(len(input_img_list)):
 
         MA_REF,T,_ = rio.mask.raster_geometry_mask(img_open, lake_outlines_ref_match['geometry'], all_touched=False, invert=True)
         
-        pxl_ref = np.sum(np.where(MA_REF,1,0))
+        pxl_ref = np.sum(np.where(MA_REF,np.uint16(1),np.uint16(0)))
 
         print(f'pxl_ref = {pxl_ref}')
-        print(f'pxl_ref proportion = {pxl_ref/total_image_pxl}')
 
         area_ref = sum(lake_outlines_ref_match['Shape_Area'])
 
         print(f'area_ref = {area_ref}')
-        print(f'area_ref proportion = {area_ref/total_image_area}')
 
 
         pred_files = []
@@ -244,10 +231,10 @@ for i_img in range(len(input_img_list)):
 
             MA,T,_ = rio.mask.raster_geometry_mask(img_open, lake_outline_match['geometry'], all_touched=False, invert=True)
             
-            pxl_pred = np.sum(np.where(MA,1,0))
+            pxl_pred = np.sum(np.where(MA,np.uint16(1),np.uint16(0)))
             
-            pxl_false_pos = np.sum(np.where(np.logical_and(MA    ,np.logical_not(MA_REF)),1,0))
-            pxl_false_neg = np.sum(np.where(np.logical_and(MA_REF,np.logical_not(MA    )),1,0))
+            pxl_false_pos = np.sum(np.where(np.logical_and(MA    ,np.logical_not(MA_REF)),np.uint16(1),np.uint16(0)))
+            pxl_false_neg = np.sum(np.where(np.logical_and(MA_REF,np.logical_not(MA    )),np.uint16(1),np.uint16(0)))
             pxl_disagree = pxl_false_pos + pxl_false_neg
             
             area = sum(lake_outline_match['Shape_Area'])
@@ -265,21 +252,10 @@ for i_img in range(len(input_img_list)):
             print(f'disagree_rate = {disagree_rate}')
             
             print(f'pxl_rate = {false_pos_rate - false_neg_rate}')
-            print(f'pxl_rate = {(pxl_pred - pxl_ref)/pxl_ref}')
+            print(f'pxl_rate = {(int(pxl_pred) - int(pxl_ref))/pxl_ref}')
 
+            print(f'area = {area}')
             print(f'area_rate = {(area - area_ref)/area_ref}')
-            
-
-            print(f'pxl_pred = {pxl_pred}')
-            pxl_pred_prop = pxl_pred/total_image_pxl
-            print(f'pxl_pred proportion = {pxl_pred_prop}')
-            
-            # print(f'area = {area}')
-            
-            area_prop = area/total_image_area
-            print(f'area proportion     = {area_prop}')
-            print(f'Relative error : {2*(pxl_pred_prop - area_prop) / (pxl_pred_prop + area_prop)}')
-            
             
         
         excel_filename_out = os.path.join(base_img_folder,output_files_name+'.xlsx')
@@ -294,30 +270,15 @@ for i_img in range(len(input_img_list)):
         
         df.to_excel(excel_filename_out)  
         
-        fig = plt.figure(figsize=(8,6))
-        # fig = plt.figure(figsize=(16,12))
+        fig = plt.figure(figsize=(16,8))
         ax = fig.gca()
         
         bar_plot(ax, nice_name,[all_false_pos_rate,all_false_neg_rate,all_disagree_rate] )
         
-        ax.set_ylabel('Relative area wrt reference')
-        ax.set_ylim([0, 0.15])
-        
-        colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
-                
-        custom_lines = [matplotlib.lines.Line2D([0], [0], color=colors[i], lw=10) for i in range(3)]
-        ax.legend(custom_lines, ['False Positive Rate', 'False Negative Rate', 'False Prediction Rate'])
-        
-        
         plt.xticks(rotation=90)
-        
-        plt.tight_layout(pad=2.)    
-        
         output_filename = os.path.join(base_img_folder,output_files_name+'.png')
-        plt.savefig(output_filename)
-        output_filename = os.path.join(base_img_folder,output_files_name+'.pdf')
-        plt.savefig(output_filename)
-        
+
+        plt.savefig(output_filename,bbox_inches='tight', pad_inches=0)
         plt.close()
 
 

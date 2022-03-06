@@ -58,11 +58,11 @@ input_img_list = [
 # '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
-'/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
-# '/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
+'/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
@@ -76,12 +76,25 @@ input_img_list = [
 # '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
 # '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/extra/Archive/C1980_test2.tif',
-'/mnt/c/GeoData/Polygon_Annotations/2011_09_08_Spot5/56-01_5_289222_11-09-08-0213592B0/SCENE01/2011_09_08_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2011_09_08_Spot5/56-01_5_289222_11-09-08-0213592B0/SCENE01/2011_09_08_Spot5.TIF',
 ]
 
 # input_img_list = [
+# '/mnt/c/GeoData/Polygon_Annotations/22.03.01/2010_10_03_Spot5b/SCENE01/2010_10_03_Spot5b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/22.03.01/2013_07_19_Spot5/SCENE01/2013_07_19.TIF',
+# ]
+
+# input_img_list = [
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
+# ]
+
+
+# input_img_list = [
+# '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
 # ]
+    
 
 
 for file_path in input_img_list:
@@ -92,13 +105,19 @@ for file_path in input_img_list:
 
 # target_mean = 127
 # target_mean = 160
-target_mean = 140
-# target_stddev = 40
-# target_stddev = 90
-target_stddev = 60
+# target_mean = 120
+target_mean = 120
+# target_mean = 140
+# target_stddev = 60
+target_stddev = 40
+# target_stddev = 60
+# target_stddev = 80
 # target_stddev = 120
 # target_stddev = 140
 # target_stddev = 20
+
+# Local_contrast = False
+Local_contrast = True
 
 
 # nx_out = 4096
@@ -124,14 +143,70 @@ ny_in = 1024
 
 
 model_list = [
-"./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
 "./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
 ]
 
 
-# Keep_Img_plots = True
-Keep_Img_plots = False
+
+# model_list = [
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_000.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_001.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_002.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_003.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_004.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_005.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_006.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_007.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_008.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_009.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_010.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_011.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_012.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_013.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_014.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_015.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_016.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_017.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_018.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_019.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_020.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_021.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_022.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_023.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_024.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_025.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_027.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_028.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_029.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_030.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_031.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_032.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_033.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_034.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_035.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_036.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_037.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_038.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_039.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_041.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_042.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_043.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_044.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_045.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_046.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_047.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_048.pt",
+# "./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
+# ]
+
+
+
+Keep_Img_plots = True
+# Keep_Img_plots = False
 
 mod_img_lara_fix = True
 # mod_img_lara_fix = False
@@ -189,51 +264,67 @@ for file_path in input_img_list:
             # fix for cropped images
             print(img.dtype)
             img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
+            
+        if Local_contrast:
+            
+            img_uint8 = img[0,:,:].astype(np.uint8)
+            
+            del img
+            
+        # else:
+                
+            # vals, count = np.unique(img , return_counts=True)
+            
+            # vals = vals[1:]
+            # count = count[1:]
+            
+            # print(vals)
+            
+            # mean = np.sum(vals*count)/np.sum(count)
+            # stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+          
+            # img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+            
+            # img_new = np.where(img_new > 255.,255.,img_new)
+            # img_new = np.where(img_new < 0.,0.,img_new)
+            # img_new = img_new.astype(np.uint8)
 
-        vals, count = np.unique(img , return_counts=True)
-        
-        vals = vals[1:]
-        count = count[1:]
-        
-        print(vals)
-        
-        mean = np.sum(vals*count)/np.sum(count)
-        stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-      
-        # print(vals)
-        # print(count)
-        # fig, ax = plt.subplots()
-        # plt.bar(vals, count)
-        # plt.savefig("bar.png")
-        
-        # print(1/0)
-      
-        
-        img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-        
-        img_new = np.where(img_new > 255.,255.,img_new)
-        img_new = np.where(img_new < 0.,0.,img_new)
-        img_new = img_new.astype(np.uint8)
-        
-        img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
+            
+            # img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
 
-        # vals, count = np.unique(img , return_counts=True)
-        
-        # vals = vals[1:]
-        # count = count[1:]
-        
-        # mean = np.sum(vals*count)/np.sum(count)
-        # stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-
-        # print(mean,stddev)
-        
-        # fig, ax = plt.subplots()
-        # plt.bar(vals, count)
-        # plt.savefig("bar.png")
+            # del img
+            # del img_new
 
 
-        del img
-        del img_new
+            
+        else:
+            
+            nskew = 10
+            
+            vals, count = np.unique(img , return_counts=True)
+            
+            vals = vals[1:]
+            count = count[1:]
+            
+            print(vals)
+            
+            mean = np.sum(vals*count)/np.sum(count)
+            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+          
+            img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+            
+            img_new = np.where(img_new > 255-nskew,255-nskew,img_new)
+            img_new = np.where(img_new < 0.,0.,img_new)
+            img_new = img_new.astype(np.uint8)
+            img_new = img_new + np.uint8(nskew)
+            
+            img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
+
+            del img
+            del img_new
+
+
+
 
         print("image loaded")
 
@@ -316,11 +407,42 @@ for file_path in input_img_list:
                         img_uint8_small = np_safe_copy(img_uint8,xi,xf,yi,yf)
                         
                         
-                        PIL_img = Image.fromarray(img_uint8_small)
-                        PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
-                        
+                        if Local_contrast:
+
+
+                            nskew = 10
+
+                           
+                            vals, count = np.unique(img_uint8_small , return_counts=True)
+                            
+                            vals = vals[1:]
+                            count = count[1:]
+                            
+                            mean = np.sum(vals*count)/np.sum(count)
+                            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+
+                            img_uint8_small_new = ((img_uint8_small.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+                            
+                            img_uint8_small_new = np.where(img_uint8_small_new > 255.-nskew,255.-nskew,img_uint8_small_new)
+                            img_uint8_small_new = np.where(img_uint8_small_new < 0.,0.,img_uint8_small_new)
+                            img_uint8_small_new = img_uint8_small_new.astype(np.uint8)
+                            img_uint8_small_new = img_uint8_small_new + np.uint8(nskew)
+
+
+                            img_uint8_small_new = np.where(img_uint8_small == 0 ,np.uint8(0),img_uint8_small_new)
+
+                            
+                            PIL_img = Image.fromarray(img_uint8_small_new)
+                            PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
+                            
+                        else:
+                            
+                            PIL_img = Image.fromarray(img_uint8_small)
+                            PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
+                            
                         
                         # PIL_img = PIL_img.filter(ImageFilter.BLUR)
+                        # PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
                         # PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
                         
                         
