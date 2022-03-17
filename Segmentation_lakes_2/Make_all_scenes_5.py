@@ -116,8 +116,8 @@ target_stddev = 40
 # target_stddev = 140
 # target_stddev = 20
 
-# Local_contrast = False
-Local_contrast = True
+Local_contrast = False
+# Local_contrast = True
 
 
 # nx_out = 4096
@@ -142,71 +142,71 @@ nx_in = 1024
 ny_in = 1024
 
 
-model_list = [
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
-]
-
-
-
 # model_list = [
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_000.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_001.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_002.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_003.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_004.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_005.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_006.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_007.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_008.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_009.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_010.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_011.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_012.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_013.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_014.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_015.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_016.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_017.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_018.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_019.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_020.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_021.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_022.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_023.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_024.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_025.pt",
 # "./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_027.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_028.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_029.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_030.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_031.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_032.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_033.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_034.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_035.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_036.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_037.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_038.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_039.pt",
 # "./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_041.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_042.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_043.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_044.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_045.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_046.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_047.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_048.pt",
 # "./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
 # ]
 
 
 
-Keep_Img_plots = True
-# Keep_Img_plots = False
+model_list = [
+"./trainings/4_RGB_ADAMS_RESTART/Restart_000.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_001.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_002.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_003.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_004.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_005.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_006.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_007.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_008.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_009.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_010.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_011.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_012.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_013.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_014.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_015.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_016.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_017.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_018.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_019.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_020.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_021.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_022.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_023.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_024.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_025.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_027.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_028.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_029.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_030.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_031.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_032.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_033.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_034.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_035.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_036.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_037.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_038.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_039.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_041.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_042.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_043.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_044.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_045.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_046.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_047.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_048.pt",
+"./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
+]
+
+
+
+# Keep_Img_plots = True
+Keep_Img_plots = False
 
 mod_img_lara_fix = True
 # mod_img_lara_fix = False
@@ -410,7 +410,8 @@ for file_path in input_img_list:
                         if Local_contrast:
 
 
-                            nskew = 10
+                            # nskew = 10
+                            nskew = 0
 
                            
                             vals, count = np.unique(img_uint8_small , return_counts=True)
@@ -447,13 +448,6 @@ for file_path in input_img_list:
                         
                         
                         PIL_img.save(transfo_imgs_folder+"/tmp_img.png")
-                        
-                        # mask = np.zeros((nx_out,ny_out),dtype=np.uint8)
-                        # mask[0:(nx_out//2),0:(ny_out//2)]=1
-                        # PIL_mask = Image.fromarray(mask)
-                        # PIL_mask = PIL_mask.resize(size=(nx_in,ny_in),resample=Image.NEAREST)
-                        # PIL_mask.save(transfo_masks_folder+"/tmp_mask.png")
-                        
                         
                         dataset_test = LakesDataset(transfo_folder, get_transform(train=False))
                         

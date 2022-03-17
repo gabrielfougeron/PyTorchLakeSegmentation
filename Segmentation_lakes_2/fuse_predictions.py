@@ -43,35 +43,29 @@ from PIL import Image
 # ]
 
 # List of big images => nx_out = 2048
-# input_img_list = [
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2013_08_24_Spot5b/SCENE01/2013_08_24_Spot5b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2016_Spot7/Spot7_Syrdakh_BW.tif',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/1989_07_16_Spot1b/SCENE01/1989_07_16_Spot1b.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2011_07_30_Spot4/SCENE01/2011_07_30_Spot4.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_24_Spot5c/SCENE01/2013_08_24_Spot5c.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_08_30_Spot5/SCENE01/2013_08_30_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/extra/2013_09_02_Spot5/SCENE01/2013_09_02_Spot5.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
-# '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
-# ]
-
 input_img_list = [
-# '/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
-'/mnt/c/Users/Gabriel/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
+# '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2005_09_25_Spot5/SCENE01/2005_09_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
+'/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5b/SCENE01/2013_08_24_Spot5b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2016_Spot7/Spot7_Syrdakh_BW.tif',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/1989_07_16_Spot1b/SCENE01/1989_07_16_Spot1b.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2011_07_30_Spot4/SCENE01/2011_07_30_Spot4.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_08_24_Spot5c/SCENE01/2013_08_24_Spot5c.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_08_30_Spot5/SCENE01/2013_08_30_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/extra/2013_09_02_Spot5/SCENE01/2013_09_02_Spot5.TIF',
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
+# '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
 ]
-
 
 for file_path in input_img_list:
     if not(os.path.isfile(file_path)):
@@ -161,54 +155,8 @@ for file_path in input_img_list:
         print('xmax = ',xmax)
         print('ymin = ',ymin)
         print('ymax = ',ymax)
-        
-        if mod_img_lara_fix:
-            # fix for cropped images
-            print(img.dtype)
-            img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
-
-        vals, count = np.unique(img , return_counts=True)
-        
-        vals = vals[1:]
-        count = count[1:]
-        
-        mean = np.sum(vals*count)/np.sum(count)
-        stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-      
-        # print(vals)
-        # print(count)
-        # fig, ax = plt.subplots()
-        # plt.bar(vals, count)
-        # plt.savefig("bar.png")
-        
-        # print(1/0)
-      
-        
-        img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-        
-        img_new = np.where(img_new > 255.,255.,img_new)
-        img_new = np.where(img_new < 0.,0.,img_new)
-        img_new = img_new.astype(np.uint8)
-        
-        img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
-
-        # vals, count = np.unique(img , return_counts=True)
-        
-        # vals = vals[1:]
-        # count = count[1:]
-        
-        # mean = np.sum(vals*count)/np.sum(count)
-        # stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-
-        # print(mean,stddev)
-        
-        # fig, ax = plt.subplots()
-        # plt.bar(vals, count)
-        # plt.savefig("bar.png")
-
 
         del img
-        del img_new
 
         print("image loaded")
 

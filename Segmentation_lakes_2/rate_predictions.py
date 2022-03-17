@@ -112,12 +112,11 @@ transfo_masks_folder = transfo_folder+'Lakes_masks/'
 transfo_imgs_folder = transfo_folder+'Lakes_png_images/'
 
 
-# Aggregated_predictions = True
-Aggregated_predictions = False 
+Aggregated_predictions = True
+# Aggregated_predictions = False 
 
-Initial_predictions = True
-# Initial_predictions = False
-
+# Initial_predictions = True
+Initial_predictions = False
 
 
 if Aggregated_predictions and Initial_predictions:
@@ -301,12 +300,14 @@ for i_img in range(len(input_img_list)):
         bar_plot(ax, nice_name,[all_false_pos_rate,all_false_neg_rate,all_disagree_rate] )
         
         ax.set_ylabel('Relative area wrt reference')
-        ax.set_ylim([0, 0.15])
+        # ax.set_ylim([0, 0.15])
+        ax.set_ylim([0, 0.2])
+        # ax.set_ylim([0, 0.5])
         
         colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
                 
-        custom_lines = [matplotlib.lines.Line2D([0], [0], color=colors[i], lw=10) for i in range(3)]
-        ax.legend(custom_lines, ['False Positive Rate', 'False Negative Rate', 'False Prediction Rate'])
+        # custom_lines = [matplotlib.lines.Line2D([0], [0], color=colors[i], lw=10) for i in range(3)]
+        # ax.legend(custom_lines, ['False Positive Rate', 'False Negative Rate', 'False Prediction Rate'])
         
         
         plt.xticks(rotation=90)

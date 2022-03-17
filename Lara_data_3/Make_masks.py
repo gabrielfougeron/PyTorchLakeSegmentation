@@ -30,61 +30,24 @@ import warnings
 
 from scipy import ndimage
 
-from PIL import Image
+from PIL import Image,ImageFilter
 
 def inBB(BB,x,y):
     return (x > BB[0]) and (y > BB[1]) and (x < BB[2]) and (y < BB[3])
 
 
-def random_colors(N, bright=True):
-    """
-    Generate random colors.
-    To get visually distinct colors, generate them in HSV space then
-    convert to RGB.
-    """
-    brightness = 1.0 if bright else 0.7
-    hsv = [(i / N, 1, brightness) for i in range(N)]
-    colors = list(map(lambda c: colorsys.hsv_to_rgb(*c), hsv))
-    random.shuffle(colors)
-    return colors
-
-'''
-
-
-# init_image = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF'
-# init_lake_bou = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03_North_clipB.shp'
-# img_name_id = '2010_10_03_N'
-
-
-# init_image = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF'
-# init_lake_bou = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/2010_10_03_lakes_clipped.shp'
-# img_name_id = '2010_10_03_S'
-
-
-init_image = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2012_09_25/SCENE01/2012_09_25_Spot5.TIF'
-init_lake_bou = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2012_09_25/2012_09_25B.shp'
-img_name_id = '2012_09_25'
-
-
-
-# init_image = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/Spot7_Syrdakh_BW.tif'
-# init_lake_bou = '/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp'
-# img_name_id = '2016_Spot7'
-
-'''
-
 init_image_list = [
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2012_09_25/SCENE01/2012_09_25_Spot5.TIF',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/Spot7_Syrdakh_BW.tif',
+'/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03N0.TIF',
+'/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
+'/mnt/c/GeoData/training_gab_01_23_2022/2012_09_25/SCENE01/2012_09_25_Spot5.TIF',
+'/mnt/c/GeoData/training_gab_01_23_2022/2016_Spot7/Spot7_Syrdakh_BW.tif',
 ]
 
 init_lake_bou_list = [
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03_North_clipB.shp',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2010_10_03_S/2010_10_03_lakes_clipped.shp',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2012_09_25/2012_09_25B.shp',
-'/mnt/c/Users/Gabriel/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp',
+'/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_N/2010_10_03_North_clipB.shp',
+'/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/2010_10_03_lakes_clipped.shp',
+'/mnt/c/GeoData/training_gab_01_23_2022/2012_09_25/2012_09_25_lakes.shp',
+'/mnt/c/GeoData/training_gab_01_23_2022/2016_Spot7/2016_Spot7.shp',
 ]
 
 img_name_id_list = [
@@ -94,11 +57,25 @@ img_name_id_list = [
 '2016_Spot7',
 ]
 
+n_img_output_list = [
+3000,
+3000,
+8000,
+8000,
+]
+
 mod_img_lara_fix_list = [
 True,
 True,
 False,
 False,
+]
+
+Conversion_factor_to_uint8_list = [
+1.0,
+1.0,
+1.0,
+0.25,
 ]
 
 output_masks_folder = './output/Lakes_masks'
@@ -120,33 +97,29 @@ ny_out = 1024
 scale_min = 1.7
 scale_max = 2.5
 
-# brightness_coeff_min = 0.8
-# brightness_coeff_max = 1.3
+target_mean_min = 100
+target_mean_max = 160
 
-brightness_coeff_min = 1.0
-brightness_coeff_max = 1.0
+target_stddev_min = 10
+target_stddev_max = 60
 
-# target_mean = 127
-target_mean = 120
-target_stddev = 40
-# target_stddev = 20
-
-n_img_output = 2500
+Local_contrast = True
+# Local_contrast = False
 
 
-# target_mean = 127
-target_mean = 120
-target_stddev = 40
-# target_stddev = 20
+BLUR_proba = 0.1
+SMOOTH_proba = 0.1
+SMOOTH_MORE_proba = 0.1
 
 
 
-
-for i_img in range(len(init_image_list)):
+# for i_img in range(len(init_image_list)):
+for i_img in [3]:
     
     init_image = init_image_list[i_img]
     init_lake_bou = init_lake_bou_list[i_img]
     img_name_id = img_name_id_list[i_img]
+    n_img_output = n_img_output_list[i_img]
     
     print('Image path :')
     print(init_image)
@@ -177,27 +150,38 @@ for i_img in range(len(init_image_list)):
             print(img.dtype)
             img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
 
-        vals, count = np.unique(img , return_counts=True)
-        
-        # print(vals)
-        # print(count)
+        if Local_contrast:
+            
+            img_uint8 = (img[0,:,:]*Conversion_factor_to_uint8_list[i_img]).astype(np.uint8)
+            
+            del img
+            
+        else:
+            
+            target_mean = 120
+            target_stddev = 40
+                
+            vals, count = np.unique(img , return_counts=True)
+            
+            vals = vals[1:]
+            count = count[1:]
+            
+            print(vals)
+            
+            mean = np.sum(vals*count)/np.sum(count)
+            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+          
+            img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+            
+            img_new = np.where(img_new > 255.,255.,img_new)
+            img_new = np.where(img_new < 0.,0.,img_new)
+            img_new = img_new.astype(np.uint8)
 
-        vals = vals[1:]
-        count = count[1:]
-        
-        mean = np.sum(vals*count)/np.sum(count)
-        stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+            
+            img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
 
-        img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-        
-        img_new = np.where(img_new > 255.,255.,img_new)
-        img_new = np.where(img_new < 0.,0.,img_new)
-        img_new = img_new.astype(np.uint8)
-        
-        img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
-
-        del img
-        del img_new
+            del img
+            del img_new
         
         lake_outlines = gpd.read_file(init_lake_bou)
         lake_outline_match=lake_outlines.to_crs(img_open.crs)
@@ -231,9 +215,6 @@ for i_img in range(len(init_image_list)):
         
         gc.collect()
 
-        
-        
-
     safe_scale = np.sqrt(2.)
 
     safe_min = (2. - np.sqrt(2.))/4
@@ -259,9 +240,29 @@ for i_img in range(len(init_image_list)):
         
         rot_angle = 360*random.random()
 
-        brightness_coeff = brightness_coeff_min + (brightness_coeff_max - brightness_coeff_min) * random.random()
+        if Local_contrast:
+
+            target_mean = target_mean_min + (target_mean_max - target_mean_min) * random.random()
+            target_stddev = target_stddev_min + (target_stddev_max - target_stddev_min) * random.random()
+
+            vals, count = np.unique(sub_img , return_counts=True)
+            
+            vals = vals[1:]
+            count = count[1:]
+            
+            mean = np.sum(vals*count)/np.sum(count)
+            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+          
+            sub_img_new = ((sub_img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+            
+            sub_img_new = np.where(sub_img_new > 255.,255.,sub_img_new)
+            sub_img_new = np.where(sub_img_new < 0.,0.,sub_img_new)
+            
+            sub_img = np.where(sub_img == 0 ,0.,sub_img_new)
+
+
         
-        sub_img_rot = (ndimage.rotate(sub_img,rot_angle,reshape=False,order=3) * brightness_coeff).astype(np.uint8)
+        sub_img_rot = ndimage.rotate(sub_img,rot_angle,reshape=False,order=3).astype(np.uint8)
         sub_poly_img_rot = ndimage.rotate(sub_poly_img,rot_angle,reshape=False,order=0)
         
         # print(dx,dy)
@@ -278,7 +279,18 @@ for i_img in range(len(init_image_list)):
         
         PIL_img = Image.fromarray(sub_img_rot)
         PIL_img = PIL_img.resize(size=(nx_out,ny_out),resample=Image.BICUBIC)
-        sub_img_rot = np.array(PIL_img)
+        
+                
+        if (random.random() < BLUR_proba):
+            PIL_img = PIL_img.filter(ImageFilter.BLUR)
+        if (random.random() < SMOOTH_proba):
+            PIL_img = PIL_img.filter(ImageFilter.SMOOTH)
+        if (random.random() < SMOOTH_MORE_proba):
+            PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
+            
+
+
+
         
         PIL_mask = Image.fromarray(sub_poly_img_rot)
         PIL_mask =  PIL_mask.resize(size=(nx_out,ny_out),resample=Image.NEAREST)
@@ -319,7 +331,6 @@ for i_img in range(len(init_image_list)):
               
             print("Saving in "+img_out_filename)
             
-            PIL_img = Image.fromarray(sub_img_rot)
             PIL_img.save(img_out_filename)
 
             obj_ids_thr = np.sort(obj_ids_thr)

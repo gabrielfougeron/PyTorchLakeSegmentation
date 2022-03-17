@@ -186,18 +186,33 @@ def get_model_instance_segmentation(num_classes):
     
     
     
-    pretrained = True
-    # pretrained = False
+    # pretrained = True
+    pretrained = False
     
     # load an instance segmentation model pre-trained pre-trained on COCO
     # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
     
     model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=pretrained, pretrained_backbone=pretrained, trainable_backbone_layers=5)
 
-    
-    for param in model.parameters():
-        # param.requires_grad_(not(pretrained))
-        param.requires_grad_(True)
+    if pretrained :
+
+        for param in model.parameters():
+            
+            param.requires_grad = True
+
+        
+    else:
+                
+        for param in model.parameters():
+            
+            param =  2*torch.rand(param.size(), dtype=param.dtype, device=param.device, requires_grad=True) - 1
+
+
+
+
+
+
+
 
 
     # get number of input features for the classifier
@@ -218,9 +233,9 @@ def get_model_instance_segmentation(num_classes):
 def get_transform(train):
     transforms = []
     transforms.append(T.ToTensor())
-    # if train:
-        # transforms.append(T.RandomHorizontalFlip(0.5))
-        # transforms.append(T.RandomVerticalFlip(0.5))
+    if train:
+        transforms.append(T.RandomHorizontalFlip(0.5))
+        transforms.append(T.RandomVerticalFlip(0.5))
     return T.Compose(transforms)
 
 
@@ -230,8 +245,8 @@ def main():
     device = torch.device('cuda')
 
     # num_workers = 1
-    # num_workers = 4
-    num_workers = 2
+    num_workers = 4
+    # num_workers = 2
     
     # our dataset has two classes only for now - background and lakes
     num_classes = 2
@@ -281,7 +296,8 @@ def main():
     print("Size of training set: ",len(dataset))
     print("Size of evaluation set: ",len(dataset_test))
 
-    batch_size = 1
+    # batch_size = 1
+    batch_size = 2
 
 
     # define training and validation data loaders
@@ -294,9 +310,9 @@ def main():
         collate_fn=utils.collate_fn)
 
     # # get the model using our helper function
-    # model = get_model_instance_segmentation(num_classes)
+    model = get_model_instance_segmentation(num_classes)
 
-    model = torch.load("./trainings/3_RGB_ADAM/MyTraining_025.pt")
+    # model = torch.load("./trainings/3_RGB_ADAM/MyTraining_025.pt")
 
 
     # move model to the right device
@@ -328,7 +344,7 @@ def main():
     # optimizer = torch.optim.SGD(params, lr=0.0001,momentum=0.9, weight_decay=0.005)
     # optimizer = torch.optim.SGD(params, lr=0.002,momentum=0.9, weight_decay=0)
     
-    optimizer = torch.optim.Adam(params, lr=0.0003)
+    optimizer = torch.optim.Adam(params, lr=0.003)
     # optimizer = torch.optim.Adam(params, lr=0.00003)
     
     
@@ -338,11 +354,11 @@ def main():
     
     
     # and a learning rate scheduler
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3,gamma=0.7)
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.8)
     # lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=25,gamma=0.9)
 
 
-    num_epochs = 50
+    num_epochs = 200
     
     summary = SummaryWriter()
 
@@ -362,8 +378,8 @@ def main():
         if ((epoch % save_freq) == 0):
             
             n_save = epoch//save_freq
-            # torch.save(model, "./MyTraining_"+str(n_save).zfill(3)+".pt")
-            torch.save(model, "./Restart_"+str(n_save).zfill(3)+".pt")
+            torch.save(model, "./MyTraining_"+str(n_save).zfill(3)+".pt")
+            # torch.save(model, "./Restart_"+str(n_save).zfill(3)+".pt")
             
             
             
