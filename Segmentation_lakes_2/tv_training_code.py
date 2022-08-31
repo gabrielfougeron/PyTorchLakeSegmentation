@@ -15,6 +15,9 @@ import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
 
+from torchvision.models.detection import MaskRCNN
+from torchvision.models.detection.backbone_utils import resnet_fpn_backbone
+
 # from adamp import AdamP
 
 from engine import train_one_epoch, evaluate
@@ -186,34 +189,33 @@ def get_model_instance_segmentation(num_classes):
     
     
     
-    # pretrained = True
-    pretrained = False
+    pretrained = True
+    # pretrained = False
     
     # load an instance segmentation model pre-trained pre-trained on COCO
     # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
     
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=pretrained, pretrained_backbone=pretrained, trainable_backbone_layers=5)
+    # model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=pretrained, pretrained_backbone=pretrained, trainable_backbone_layers=5)
 
-    if pretrained :
+    possible_backbone_names = [
+    'resnet18',
+    'resnet34',
+    'resnet50',
+    'resnet101',
+    'resnet152',
+    'resnext50_32x4d',
+    'resnext101_32x8d',
+    'wide_resnet50_2',
+    'wide_resnet101_2'
+    ]
+    
+    backbone_name = 'resnet152'
 
-        for param in model.parameters():
-            
-            param.requires_grad = True
-
-        
-    else:
-                
-        for param in model.parameters():
-            
-            param =  2*torch.rand(param.size(), dtype=param.dtype, device=param.device, requires_grad=True) - 1
-
-
-
-
-
-
+    backbone  = resnet_fpn_backbone(backbone_name, pretrained=pretrained)
+    model = MaskRCNN(backbone=backbone, num_classes=num_classes)
 
 
+    '''
 
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
@@ -222,10 +224,26 @@ def get_model_instance_segmentation(num_classes):
 
     # now get the number of input features for the mask classifier
     in_features_mask = model.roi_heads.mask_predictor.conv5_mask.in_channels
-    hidden_layer = 256
+    hidden_layer = 256 # ???
     # and replace the mask predictor with a new one
     
     model.roi_heads.mask_predictor = MaskRCNNPredictor(in_features_mask,hidden_layer,num_classes)
+
+    '''
+
+    for param in model.parameters():
+        
+        param.requires_grad = True        
+
+    if not(pretrained) :
+
+        for param in model.parameters():
+            
+            param =  2*torch.rand(param.size(), dtype=param.dtype, device=param.device, requires_grad=True) - 1
+
+
+
+
 
     return model
 
@@ -245,8 +263,8 @@ def main():
     device = torch.device('cuda')
 
     # num_workers = 1
-    num_workers = 4
-    # num_workers = 2
+    # num_workers = 6
+    num_workers = 2
     
     # our dataset has two classes only for now - background and lakes
     num_classes = 2
@@ -297,7 +315,8 @@ def main():
     print("Size of evaluation set: ",len(dataset_test))
 
     # batch_size = 1
-    batch_size = 2
+    # batch_size = 2
+    batch_size = 1
 
 
     # define training and validation data loaders
@@ -305,14 +324,12 @@ def main():
         dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers,
         collate_fn=utils.collate_fn)
         
-    data_loader_test = torch.utils.data.DataLoader(
-        dataset_test, batch_size=1, shuffle=False, num_workers=num_workers,
-        collate_fn=utils.collate_fn)
-
     # # get the model using our helper function
-    model = get_model_instance_segmentation(num_classes)
+    # model = get_model_instance_segmentation(num_classes)
 
-    # model = torch.load("./trainings/3_RGB_ADAM/MyTraining_025.pt")
+    # model = torch.load("./trainings/03_SGD_resnet152_before_bug/MyTraining_008.pt")
+    # model = torch.load("./trainings/04_SGD_resnet152_before_second_bug/MyTraining_007.pt")
+    model = torch.load("./Start.pt")
 
 
     # move model to the right device
@@ -329,7 +346,7 @@ def main():
     # params = [p for p in model.parameters()]
     
     
-    print(len(params))
+    # print(len(params))
     tot_nparam = 0
     for i in range(len(params)):
         tot_nparam += int(params[i].numel())
@@ -344,7 +361,13 @@ def main():
     # optimizer = torch.optim.SGD(params, lr=0.0001,momentum=0.9, weight_decay=0.005)
     # optimizer = torch.optim.SGD(params, lr=0.002,momentum=0.9, weight_decay=0)
     
-    optimizer = torch.optim.Adam(params, lr=0.003)
+    # optimizer = torch.optim.SGD(params, lr=0.003,momentum=0.9, weight_decay=5e-4)
+    # optimizer = torch.optim.SGD(params, lr=0.0004,momentum=0.9, weight_decay=5e-4)
+    # optimizer = torch.optim.SGD(params, lr=0.00004,momentum=0.9, weight_decay=5e-4)
+    optimizer = torch.optim.SGD(params, lr=0.000005,momentum=0.9, weight_decay=0)
+    
+    # optimizer = torch.optim.Adam(params, lr=0.003)
+    # optimizer = torch.optim.Adam(params, lr=0.0005)
     # optimizer = torch.optim.Adam(params, lr=0.00003)
     
     
@@ -364,12 +387,12 @@ def main():
 
     for epoch in range(num_epochs):
         
-        print_freq = 300
+        print_freq = 1000
+        # print_freq = 300
+        # print_freq = 10
         train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq,summary)
         # update the learning rate
         lr_scheduler.step()
-        # evaluate on the test dataset
-        # evaluate(model, data_loader_test, device,epoch, print_freq,summary)
         
         summary.flush()
         

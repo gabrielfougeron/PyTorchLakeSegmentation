@@ -58,29 +58,12 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq,sum
         lr_scheduler = utils.warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor)
 
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
+        
+        
+        torch.cuda.empty_cache() 
+        
         images = list(image.to(device) for image in images)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
-        
-        '''
-        i=0
-        for image in images:
-            print('')
-            print(i)
-            print(image.dtype)
-            img = image.detach().cpu().numpy()
-            img = np.rollaxis(img, 0,3)
-            print(image.dtype)
-            print(img.shape)
-            # PIL_img = Image.fromarray(np.rollaxis(img, 0,3))
-            PIL_img = Image.fromarray(np.uint8(img*256)).convert('RGB')
-            # PIL_img = Image.fromarray(np.uint8(img*256)).convert('L')
-            PIL_img.save(str(i).zfill(3)+'.png')
-            # PIL_img.save('0.jpg')
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            # img.imwrite('1.jpg')
-            
-            i+=1
-        '''
         
         loss_dict = model(images, targets)
 

@@ -103,21 +103,28 @@ for file_path in input_img_list:
 
 
 
-# target_mean = 127
-# target_mean = 160
-# target_mean = 120
-target_mean = 120
-# target_mean = 140
-# target_stddev = 60
-target_stddev = 40
-# target_stddev = 60
-# target_stddev = 80
-# target_stddev = 120
-# target_stddev = 140
-# target_stddev = 20
+target_mean_list = [    120 ,120,120,140 ,140,140,160 ,160,160,]
+target_stddev_list = [  40  ,60 ,80 ,40  ,60 ,80 ,40  ,60 ,80 ,]
 
-Local_contrast = False
-# Local_contrast = True
+# target_mean_list = [   140]
+# target_stddev_list = [  60]
+
+# target_mean_list = [   None]
+# target_stddev_list = [  None]
+
+
+
+n_contrast = len(target_mean_list)
+
+Local_contrast_list = [False for i in range(n_contrast)]
+# Local_contrast_list = [True for i in range(n_contrast)]
+
+
+for contrast_params in [target_mean_list,target_stddev_list,Local_contrast_list]:
+    if not(len(contrast_params) == n_contrast):
+        raise ValueError('INVALID CONTRAST CHANGE DEFINITION')
+
+
 
 
 # nx_out = 4096
@@ -142,66 +149,28 @@ nx_in = 1024
 ny_in = 1024
 
 
+Additional_filters = []
+# Additional_filters = [ImageFilter.BLUR]
+# Additional_filters = [ImageFilter.SMOOTH_MORE]
+
+
 # model_list = [
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
-# "./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
+# "./trainings/02_SGD_resnet18/MyTraining_001.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_000.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_001.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_002.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_003.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_004.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_005.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_006.pt",
+# "./trainings/04_SGD_resnet152_before_second_bug/MyTraining_007.pt",
 # ]
 
-
-
 model_list = [
-"./trainings/4_RGB_ADAMS_RESTART/Restart_000.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_001.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_002.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_003.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_004.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_005.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_006.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_007.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_008.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_009.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_010.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_011.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_012.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_013.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_014.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_015.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_016.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_017.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_018.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_019.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_020.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_021.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_022.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_023.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_024.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_025.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_026.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_027.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_028.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_029.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_030.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_031.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_032.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_033.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_034.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_035.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_036.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_037.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_038.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_039.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_040.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_041.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_042.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_043.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_044.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_045.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_046.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_047.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_048.pt",
-"./trainings/4_RGB_ADAMS_RESTART/Restart_049.pt",
+"./trainings/05_SGD_resnet152_final/MyTraining_005.pt",
 ]
+
+
 
 
 
@@ -241,93 +210,10 @@ for file_path in input_img_list:
     print('')   
     print('Processing image '+str(i_img)+" of "+str(n_input_img))
     print(file_root)
-    
 
     # Open raster image
     with rio.open(file_path) as img_open:
-        img = img_open.read()
-            
-        nx_img = img.shape[1]
-        ny_img = img.shape[2]
-        print('nx = ',nx_img)
-        print('ny = ',ny_img)
-                
-        BB = plotting_extent(img_open)
-        xmin,xmax,ymin,ymax = plotting_extent(img_open)
-        # xmin,ymin,xmax,ymax = img_open.bounds
-        print('xmin = ',xmin)
-        print('xmax = ',xmax)
-        print('ymin = ',ymin)
-        print('ymax = ',ymax)
         
-        if mod_img_lara_fix:
-            # fix for cropped images
-            print(img.dtype)
-            img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
-            
-        if Local_contrast:
-            
-            img_uint8 = img[0,:,:].astype(np.uint8)
-            
-            del img
-            
-        # else:
-                
-            # vals, count = np.unique(img , return_counts=True)
-            
-            # vals = vals[1:]
-            # count = count[1:]
-            
-            # print(vals)
-            
-            # mean = np.sum(vals*count)/np.sum(count)
-            # stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-          
-            # img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-            
-            # img_new = np.where(img_new > 255.,255.,img_new)
-            # img_new = np.where(img_new < 0.,0.,img_new)
-            # img_new = img_new.astype(np.uint8)
-
-            
-            # img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
-
-            # del img
-            # del img_new
-
-
-            
-        else:
-            
-            nskew = 10
-            
-            vals, count = np.unique(img , return_counts=True)
-            
-            vals = vals[1:]
-            count = count[1:]
-            
-            print(vals)
-            
-            mean = np.sum(vals*count)/np.sum(count)
-            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-          
-            img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-            
-            img_new = np.where(img_new > 255-nskew,255-nskew,img_new)
-            img_new = np.where(img_new < 0.,0.,img_new)
-            img_new = img_new.astype(np.uint8)
-            img_new = img_new + np.uint8(nskew)
-            
-            img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
-
-            del img
-            del img_new
-
-
-
-
-        print("image loaded")
-
         base_img_folder = all_pred_folder+file_root+'/'
         base_poly_mul_folder = base_img_folder+'/polygons_mul/'
         output_aggreg_poly_folder = base_img_folder+'/polygons_mul_fused/'
@@ -344,352 +230,420 @@ for file_path in input_img_list:
         with open(filename_path_save, 'w') as outfile:
             outfile.write(file_path)
 
-        for the_model in model_list:
-            
-            the_basename = os.path.basename(the_model)
-            model_root,ext = os.path.splitext(the_basename)
-            
-            print(model_root,ext)
-            
-            base_model_folder =base_poly_mul_folder+model_root+'/'
-
-            output_poly_folder = base_model_folder +'polygons/'
-            output_fused_poly_folder = base_model_folder+'fused_polygons/'
-            output_imgs_folder = base_model_folder+'images/'
-
-            for store_folder in [transfo_folder,transfo_masks_folder,transfo_imgs_folder,output_imgs_folder,output_poly_folder,output_fused_poly_folder]:
-                if not(os.path.isdir(store_folder)):
-                    os.makedirs(store_folder)
-
-            model = torch.load(the_model)
-            model.to(device)
-
-            nxtot = img_uint8.shape[0]
-            nytot = img_uint8.shape[1]
-
-            xstart_list = [0,nx_out//2]
-            ystart_list = [0,ny_out//2]
-
-            # xstart_list = [0]
-            # ystart_list = [0]
-            
-            istartmin = 0
-            istartmax = len(xstart_list)
-            
-            ixmin = 0
-            iymin = 0
-            
-            for istart in range(istartmin,istartmax):
-                
-                xstart = xstart_list[istart]
-                ystart = ystart_list[istart]
-
-                ixmax = (nxtot-xstart)//nx_out  + 1
-                iymax = (nytot-ystart)//ny_out  + 1
-
-                # ixmin = 3
-                # iymin = 3
-                # ixmax = 5
-                # iymax = 5
-
-
-                for ix in range(ixmin,ixmax):
-                    for iy in range(iymin,iymax):
-                        
-                        print(model_root,' ',istart,istartmax,ix,ixmax,iy,iymax)
-
-                        # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
-                        
-                        xi = xstart+ix*nx_out
-                        xf = xstart+(ix+1)*nx_out
-                        yi = ystart+iy*ny_out
-                        yf = ystart+(iy+1)*ny_out
-                        img_uint8_small = np_safe_copy(img_uint8,xi,xf,yi,yf)
-                        
-                        
-                        if Local_contrast:
-
-
-                            # nskew = 10
-                            nskew = 0
-
-                           
-                            vals, count = np.unique(img_uint8_small , return_counts=True)
-                            
-                            vals = vals[1:]
-                            count = count[1:]
-                            
-                            mean = np.sum(vals*count)/np.sum(count)
-                            stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
-
-                            img_uint8_small_new = ((img_uint8_small.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
-                            
-                            img_uint8_small_new = np.where(img_uint8_small_new > 255.-nskew,255.-nskew,img_uint8_small_new)
-                            img_uint8_small_new = np.where(img_uint8_small_new < 0.,0.,img_uint8_small_new)
-                            img_uint8_small_new = img_uint8_small_new.astype(np.uint8)
-                            img_uint8_small_new = img_uint8_small_new + np.uint8(nskew)
-
-
-                            img_uint8_small_new = np.where(img_uint8_small == 0 ,np.uint8(0),img_uint8_small_new)
-
-                            
-                            PIL_img = Image.fromarray(img_uint8_small_new)
-                            PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
-                            
-                        else:
-                            
-                            PIL_img = Image.fromarray(img_uint8_small)
-                            PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
-                            
-                        
-                        # PIL_img = PIL_img.filter(ImageFilter.BLUR)
-                        # PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
-                        # PIL_img = PIL_img.filter(ImageFilter.SMOOTH_MORE)
-                        
-                        
-                        PIL_img.save(transfo_imgs_folder+"/tmp_img.png")
-                        
-                        dataset_test = LakesDataset(transfo_folder, get_transform(train=False))
-                        
-                        data_loader_test = torch.utils.data.DataLoader(
-                            dataset_test, batch_size=1, shuffle=False, num_workers=1,
-                            collate_fn=utils.collate_fn)
-
-                        output_img_filename = output_imgs_folder+file_root+'_'+str(istart)+'_'+str(ix).zfill(2)+'_'+str(iy).zfill(2)+'.png'
-                        output_poly_filename = output_poly_folder+file_root+'_'+str(istart)+'_'+str(ix).zfill(2)+'_'+str(iy).zfill(2)+'.shp'
-                        
-                        thresh = 0.5
-                        
-                        if Keep_Img_plots:
-                            all_masks = get_one_mask_and_plot(model, data_loader_test, device=device,image_output_filename=output_img_filename,thresh=thresh)
-                        else:
-                            all_masks = get_one_mask_no_plot(model, data_loader_test, device=device,thresh=thresh)
-                        
-                        npoly = all_masks.shape[0]
-                        print('npoly = ',npoly)
-
-                        mask_no_col = np.zeros((nx_in,nx_in),dtype=np.uint8)
-                        
-                        npoly_real = 0
-                        
-                        eq_classes = []
-
-                        for ipoly in range(npoly):
-
-                            MA = torch.where(all_masks[ipoly,0,:,:] > thresh,1,0).reshape((nx_in,nx_in)).detach().cpu().numpy().astype(np.uint8)
-                            
-                            poly_collisions = np.where(MA,mask_no_col,0).astype(np.uint8).reshape((nx_in,nx_in))
-                            
-                            partial_class = set(np.unique(poly_collisions))
-                            partial_class.remove(0)
-                            partial_class.add(ipoly+1)
-                            
-                            for the_class in eq_classes:
-                                
-                                if partial_class.intersection(the_class):
-                                    
-                                    partial_class.update(the_class)
-                            
-                            eq_classes = [ the_class for the_class in eq_classes if not(partial_class.intersection(the_class))]
-                            eq_classes.append(partial_class)
-                            
-                            mask_no_col = np.where(MA,(ipoly+1),mask_no_col).astype(np.uint8).reshape((nx_in,nx_in))
-
-                        class_mask = np.zeros((nx_in,nx_in),dtype=np.uint8)
-                        
-                        for iclass in range(len(eq_classes)):
-                            
-                            for jpoly in eq_classes[iclass]:
-                            
-                                to_add = np.where(mask_no_col == jpoly ,(iclass+1),0).astype(np.uint8).reshape((nx_in,nx_in))
-                                
-                                overlap = np.sum(to_add*class_mask)
-                                
-                                if (overlap):
-                                    raise ValueError("There was an error in merging overlapping polygons")
-                                
-                                class_mask += to_add
-                        
-                        n_poly_no_col = len(eq_classes)
-                        
-                        class_mask_PIL = Image.fromarray(class_mask)
-                        class_mask_PIL = class_mask_PIL.resize(size=(nx_out,ny_out),resample=Image.NEAREST)
-                        class_mask = np.array(class_mask_PIL).reshape((nx_out,ny_out))
-
-                        print('npoly without collisions = ',n_poly_no_col)    
-                        
-                        if (n_poly_no_col > 0):
-
-                            polyval = []
-                            geometry = []
-                            
-                            the_win = rio.windows.Window((ystart+(iy)*ny_out),(xstart+(ix)*nx_out),ny_out,nx_out)
-                            the_transform = img_open.window_transform(the_win)
-
-                            the_polys = rio.features.shapes(class_mask, transform=the_transform)
-                            
-                            for shapedict, value in the_polys:
-
-                                if (value != 0):
-                                    
-                                    polyval.append(str(value-1)) # ici ça commence à zéro, désolé
-                                    geometry.append(shapely.geometry.shape(shapedict))
-                            
-                            
-                            # build the gdf object over the two lists
-                            gdf = gpd.GeoDataFrame(
-                                {'Id': polyval, 'geometry': geometry },
-                                crs=img_open.crs
-                            )
-                            
-                            gdf.to_crs({'proj':'cea'},inplace=True) 
-                            
-                            gdf['Shape_Area'] = gdf.area
-                            
-                            gdf.to_crs(img_open.crs,inplace=True) 
-                            
-                            try:
-                                gdf.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
-                            except Exception:
-                                pass
-                            
-            
-            npoly_tot = 0
-            
-            Big_GDF = gpd.GeoDataFrame(
-                        crs=img_open.crs
-                    )
-
-            for file_path in os.listdir(output_poly_folder):
-                file_path = os.path.join(output_poly_folder, file_path)
-                the_file_root, file_ext = os.path.splitext(os.path.basename(file_path))
-                
-                if (file_ext == '.shp' ):
-                    
-                    print(file_path)
-                    
-                    lake_outlines = gpd.read_file(file_path)
-                    
-                    lake_outlines.to_crs(img_open.crs,inplace=True) 
-                    
-                    npoly = lake_outlines['geometry'].shape[0]
-                    
-                    for ipoly in range(npoly):
-                        lake_outlines.loc[ipoly,'Id'] = int(float(lake_outlines.loc[ipoly,'Id'])) + npoly_tot
-                        
-                    npoly_tot += npoly
-
-                    Big_GDF = gpd.GeoDataFrame( pd.concat( [Big_GDF,lake_outlines], ignore_index=True) ,crs=img_open.crs)
-               
-                   
-            output_poly_filename = output_fused_poly_folder + 'all_polys_not_fused.shp'
-            
-            try:
-                Big_GDF.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
-            except Exception:
-                pass
-
-                   
-                   
-            # print(Big_GDF['geometry'][0])
-            Big_GDF.to_crs({'proj':'cea'},inplace=True) 
-            # print(Big_GDF['geometry'][0])
-
-            # Big_GDF.to_crs(img_open.crs,inplace=True) 
-                            
-            print(npoly_tot)
-
-            # buffer_distance = 12
-            buffer_distance = 0
-
-            print('Computing buffers')
-
-            exp_geometry = []
-
-            for ipoly in range(npoly_tot):
-                print('buffer',ipoly,npoly_tot)
-                
-                if (buffer_distance == 0):
-                    exp_geometry.append(Big_GDF['geometry'][ipoly])
-                else:
-                    exp_geometry.append(Big_GDF['geometry'][ipoly].buffer(buffer_distance))
-                
-            inter_ij = np.full((npoly_tot,npoly_tot),False,dtype=bool)
-
-            print('Computing intersections')
-
-            for ipoly in range(npoly_tot):
-                print('intersection',ipoly,npoly_tot)
-                inter_ij[ipoly,ipoly] = True
-                for jpoly in range(ipoly+1,npoly_tot):
-                    inter_ij[ipoly,jpoly] = exp_geometry[ipoly].intersects(exp_geometry[jpoly])
-                    inter_ij[jpoly,ipoly] = inter_ij[ipoly,jpoly]
-            
-            print('Building Classes')
-            
-            eq_classes = []
-            for ipoly in range(npoly_tot):
-                print('class',ipoly,npoly_tot)
-                direct_intersect = []
-                for jpoly in range(npoly_tot):
-                    if inter_ij[ipoly,jpoly]:
-                        direct_intersect.append(jpoly)
-                
-                partial_class = set(direct_intersect)
-
-                for the_class in eq_classes:
-                    
-                    if partial_class.intersection(the_class):
-                        
-                        partial_class.update(the_class)
-                
-                eq_classes = [ the_class for the_class in eq_classes if not(partial_class.intersection(the_class))]
-                eq_classes.append(partial_class)
-            
-            print('Number of classes ',len(eq_classes))
-            
-            the_ids = []
-            the_geometry = []
-
-            print('Fusing polygons')
-
-            for iclass in range(len(eq_classes)):
-                print('fuse',iclass,len(eq_classes))
-                
-                class_polys = [Big_GDF['geometry'][ipoly] for ipoly in eq_classes[iclass]]
-                
-                for ipoly in eq_classes[iclass]:
-                
-                    for jpoly in eq_classes[iclass]:
-                        
-                        if (ipoly != jpoly):
-                            class_polys.append(exp_geometry[ipoly].intersection(exp_geometry[jpoly]))
-                
-                
-                the_union = shapely.ops.unary_union(class_polys)
-                
-                if isinstance(the_union,shapely.geometry.polygon.Polygon) :
-                    the_ids.append(iclass)
-                    the_geometry.append(the_union)
-
-            gdf_fused = gpd.GeoDataFrame(
-                {'Id': the_ids, 'geometry': the_geometry },
-                crs={'proj':'cea'}
-            )
-                
-            gdf_fused['Shape_Area'] = gdf_fused.area
-            gdf_fused.to_crs(img_open.crs,inplace=True) 
-
-            output_poly_filename = output_fused_poly_folder + 'all_polys.shp'
-            
-            try:
-                gdf_fused.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
-            except Exception:
-                pass
-
-
-            shutil.rmtree(output_poly_folder)
         
+        for i_contrast in range(n_contrast):
+            
+            target_mean = target_mean_list[i_contrast]
+            target_stddev = target_stddev_list[i_contrast]
+            Local_contrast = Local_contrast_list[i_contrast]
+
+            img = img_open.read()
+                
+            nx_img = img.shape[1]
+            ny_img = img.shape[2]
+            print('nx = ',nx_img)
+            print('ny = ',ny_img)
+                    
+            BB = plotting_extent(img_open)
+            xmin,xmax,ymin,ymax = plotting_extent(img_open)
+            # xmin,ymin,xmax,ymax = img_open.bounds
+            print('xmin = ',xmin)
+            print('xmax = ',xmax)
+            print('ymin = ',ymin)
+            print('ymax = ',ymax)
+            
+            if mod_img_lara_fix:
+                # fix for cropped images
+                print(img.dtype)
+                img = np.where(img[0,:,:] == 256 ,np.uint16(0),img)
+                
+            if Local_contrast:
+                
+                img_uint8 = img[0,:,:].astype(np.uint8)
+                
+                del img
+                
+            else:
+                
+                nskew = 0
+                
+                vals, count = np.unique(img , return_counts=True)
+                
+                vals = vals[1:]
+                count = count[1:]
+                
+                print(vals)
+                
+                mean = np.sum(vals*count)/np.sum(count)
+                stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+              
+                img_new = ((img.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+                
+                img_new = np.where(img_new > 255-nskew,255-nskew,img_new)
+                img_new = np.where(img_new < 0.,0.,img_new)
+                img_new = img_new.astype(np.uint8)
+                img_new = img_new + np.uint8(nskew)
+                
+                img_uint8 = np.where(img[0,:,:] == 0 ,np.uint8(0),img_new[0,:,:])
+
+                del img
+                del img_new
+
+
+
+            for the_model in model_list:
+                
+                the_basename = os.path.basename(the_model)
+                model_root,ext = os.path.splitext(the_basename)
+                
+                print(model_root,ext)
+                
+                base_model_folder =base_poly_mul_folder+model_root+'_'+str(i_contrast).zfill(2)+'/'
+                    
+
+                output_poly_folder = base_model_folder +'polygons/'
+                output_fused_poly_folder = base_model_folder+'fused_polygons/'
+                output_imgs_folder = base_model_folder+'images/'
+
+                for store_folder in [transfo_folder,transfo_masks_folder,transfo_imgs_folder,output_imgs_folder,output_poly_folder,output_fused_poly_folder]:
+                    if not(os.path.isdir(store_folder)):
+                        os.makedirs(store_folder)
+
+                filename_path_save = base_model_folder+'Contrast_settings.txt'
+
+                with open(filename_path_save, 'w') as outfile:
+                    outfile.write(f'target_mean = {target_mean}\n')
+                    outfile.write(f'target_stddev = {target_stddev}\n')
+                    outfile.write(f'Local_contrast = {Local_contrast}\n')
+
+
+                model = torch.load(the_model)
+                model.to(device)
+
+                nxtot = img_uint8.shape[0]
+                nytot = img_uint8.shape[1]
+
+                xstart_list = [0,nx_out//2]
+                ystart_list = [0,ny_out//2]
+
+                # xstart_list = [0]
+                # ystart_list = [0]
+                
+                istartmin = 0
+                istartmax = len(xstart_list)
+                
+                ixmin = 0
+                iymin = 0
+                
+                for istart in range(istartmin,istartmax):
+                    
+                    xstart = xstart_list[istart]
+                    ystart = ystart_list[istart]
+
+                    ixmax = (nxtot-xstart)//nx_out  + 1
+                    iymax = (nytot-ystart)//ny_out  + 1
+
+                    # ixmin = 3
+                    # iymin = 3
+                    # ixmax = 5
+                    # iymax = 5
+
+
+                    for ix in range(ixmin,ixmax):
+                        for iy in range(iymin,iymax):
+                            
+                            print(model_root,' ',i_contrast,n_contrast,istart,istartmax,ix,ixmax,iy,iymax)
+
+                            # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
+                            
+                            xi = xstart+ix*nx_out
+                            xf = xstart+(ix+1)*nx_out
+                            yi = ystart+iy*ny_out
+                            yf = ystart+(iy+1)*ny_out
+                            img_uint8_small = np_safe_copy(img_uint8,xi,xf,yi,yf)
+                            
+                            if Local_contrast and not((target_stddev is None) and (target_mean is None)):
+
+                                # nskew = 10
+                                nskew = 0
+
+                               
+                                vals, count = np.unique(img_uint8_small , return_counts=True)
+                                
+                                vals = vals[1:]
+                                count = count[1:]
+                                
+                                mean = np.sum(vals*count)/np.sum(count)
+                                stddev = np.sqrt(np.sum(((vals-mean)**2)*count)/np.sum(count))
+
+                                img_uint8_small_new = ((img_uint8_small.astype(np.float32) - mean) * (target_stddev/stddev) + target_mean)
+                                
+                                img_uint8_small_new = np.where(img_uint8_small_new > 255.-nskew,255.-nskew,img_uint8_small_new)
+                                img_uint8_small_new = np.where(img_uint8_small_new < 0.,0.,img_uint8_small_new)
+                                img_uint8_small_new = img_uint8_small_new.astype(np.uint8)
+                                img_uint8_small_new = img_uint8_small_new + np.uint8(nskew)
+
+
+                                img_uint8_small_new = np.where(img_uint8_small == 0 ,np.uint8(0),img_uint8_small_new)
+
+                                
+                                PIL_img = Image.fromarray(img_uint8_small_new)
+                                PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
+                                
+                            else:
+                                
+                                PIL_img = Image.fromarray(img_uint8_small)
+                                PIL_img = PIL_img.resize(size=(nx_in,ny_in),resample=Image.BICUBIC)
+                                
+                            
+                            for filer in Additional_filters:
+                            
+                                PIL_img = PIL_img.filter(filer)
+                            
+                            
+                            PIL_img.save(transfo_imgs_folder+"/tmp_img.png")
+                            
+                            dataset_test = LakesDataset(transfo_folder, get_transform(train=False))
+                            
+                            data_loader_test = torch.utils.data.DataLoader(
+                                dataset_test, batch_size=1, shuffle=False, num_workers=1,
+                                collate_fn=utils.collate_fn)
+
+                            output_img_filename = output_imgs_folder+file_root+'_'+str(istart)+'_'+str(ix).zfill(2)+'_'+str(iy).zfill(2)+'.png'
+                            output_poly_filename = output_poly_folder+file_root+'_'+str(istart)+'_'+str(ix).zfill(2)+'_'+str(iy).zfill(2)+'.shp'
+                            
+                            thresh = 0.5
+                            
+                            if Keep_Img_plots:
+                                all_masks = get_one_mask_and_plot(model, data_loader_test, device=device,image_output_filename=output_img_filename,thresh=thresh)
+                            else:
+                                all_masks = get_one_mask_no_plot(model, data_loader_test, device=device,thresh=thresh)
+                            
+                            npoly = all_masks.shape[0]
+                            print('npoly = ',npoly)
+
+                            mask_no_col = np.zeros((nx_in,nx_in),dtype=np.uint8)
+                            
+                            npoly_real = 0
+                            
+                            eq_classes = []
+
+                            for ipoly in range(npoly):
+
+                                MA = torch.where(all_masks[ipoly,0,:,:] > thresh,1,0).reshape((nx_in,nx_in)).detach().cpu().numpy().astype(np.uint8)
+                                
+                                poly_collisions = np.where(MA,mask_no_col,0).astype(np.uint8).reshape((nx_in,nx_in))
+                                
+                                partial_class = set(np.unique(poly_collisions))
+                                partial_class.remove(0)
+                                partial_class.add(ipoly+1)
+                                
+                                for the_class in eq_classes:
+                                    
+                                    if partial_class.intersection(the_class):
+                                        
+                                        partial_class.update(the_class)
+                                
+                                eq_classes = [ the_class for the_class in eq_classes if not(partial_class.intersection(the_class))]
+                                eq_classes.append(partial_class)
+                                
+                                mask_no_col = np.where(MA,(ipoly+1),mask_no_col).astype(np.uint8).reshape((nx_in,nx_in))
+
+                            class_mask = np.zeros((nx_in,nx_in),dtype=np.uint8)
+                            
+                            for iclass in range(len(eq_classes)):
+                                
+                                for jpoly in eq_classes[iclass]:
+                                
+                                    to_add = np.where(mask_no_col == jpoly ,(iclass+1),0).astype(np.uint8).reshape((nx_in,nx_in))
+                                    
+                                    overlap = np.sum(to_add*class_mask)
+                                    
+                                    if (overlap):
+                                        raise ValueError("There was an error in merging overlapping polygons")
+                                    
+                                    class_mask += to_add
+                            
+                            n_poly_no_col = len(eq_classes)
+                            
+                            class_mask_PIL = Image.fromarray(class_mask)
+                            class_mask_PIL = class_mask_PIL.resize(size=(nx_out,ny_out),resample=Image.NEAREST)
+                            class_mask = np.array(class_mask_PIL).reshape((nx_out,ny_out))
+
+                            print('npoly without collisions = ',n_poly_no_col)    
+                            
+                            if (n_poly_no_col > 0):
+
+                                polyval = []
+                                geometry = []
+                                
+                                the_win = rio.windows.Window((ystart+(iy)*ny_out),(xstart+(ix)*nx_out),ny_out,nx_out)
+                                the_transform = img_open.window_transform(the_win)
+
+                                the_polys = rio.features.shapes(class_mask, transform=the_transform)
+                                
+                                for shapedict, value in the_polys:
+
+                                    if (value != 0):
+                                        
+                                        polyval.append(str(value-1)) # ici ça commence à zéro, désolé
+                                        geometry.append(shapely.geometry.shape(shapedict))
+                                
+                                
+                                # build the gdf object over the two lists
+                                gdf = gpd.GeoDataFrame(
+                                    {'Id': polyval, 'geometry': geometry },
+                                    crs=img_open.crs
+                                )
+                                
+                                gdf.to_crs({'proj':'cea'},inplace=True) 
+                                
+                                gdf['Shape_Area'] = gdf.area
+                                
+                                gdf.to_crs(img_open.crs,inplace=True) 
+                                
+                                try:
+                                    gdf.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
+                                except Exception:
+                                    pass
+                                
+                
+                npoly_tot = 0
+                
+                Big_GDF = gpd.GeoDataFrame(
+                            crs=img_open.crs
+                        )
+
+                for file_path in os.listdir(output_poly_folder):
+                    file_path = os.path.join(output_poly_folder, file_path)
+                    the_file_root, file_ext = os.path.splitext(os.path.basename(file_path))
+                    
+                    if (file_ext == '.shp' ):
+                        
+                        print(file_path)
+                        
+                        lake_outlines = gpd.read_file(file_path)
+                        
+                        lake_outlines.to_crs(img_open.crs,inplace=True) 
+                        
+                        npoly = lake_outlines['geometry'].shape[0]
+                        
+                        for ipoly in range(npoly):
+                            lake_outlines.loc[ipoly,'Id'] = int(float(lake_outlines.loc[ipoly,'Id'])) + npoly_tot
+                            
+                        npoly_tot += npoly
+
+                        Big_GDF = gpd.GeoDataFrame( pd.concat( [Big_GDF,lake_outlines], ignore_index=True) ,crs=img_open.crs)
+                   
+                       
+                output_poly_filename = output_fused_poly_folder + 'all_polys_not_fused.shp'
+                
+                try:
+                    Big_GDF.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
+                except Exception:
+                    pass
+
+                       
+                       
+                # print(Big_GDF['geometry'][0])
+                Big_GDF.to_crs({'proj':'cea'},inplace=True) 
+                # print(Big_GDF['geometry'][0])
+
+                # Big_GDF.to_crs(img_open.crs,inplace=True) 
+                                
+                print(npoly_tot)
+
+                # buffer_distance = 12
+                buffer_distance = 0
+
+                print('Computing buffers')
+
+                exp_geometry = []
+
+                for ipoly in range(npoly_tot):
+                    print('buffer',ipoly,npoly_tot)
+                    
+                    if (buffer_distance == 0):
+                        exp_geometry.append(Big_GDF['geometry'][ipoly])
+                    else:
+                        exp_geometry.append(Big_GDF['geometry'][ipoly].buffer(buffer_distance))
+                    
+                inter_ij = np.full((npoly_tot,npoly_tot),False,dtype=bool)
+
+                print('Computing intersections')
+
+                for ipoly in range(npoly_tot):
+                    print('intersection',ipoly,npoly_tot)
+                    inter_ij[ipoly,ipoly] = True
+                    for jpoly in range(ipoly+1,npoly_tot):
+                        inter_ij[ipoly,jpoly] = exp_geometry[ipoly].intersects(exp_geometry[jpoly])
+                        inter_ij[jpoly,ipoly] = inter_ij[ipoly,jpoly]
+                
+                print('Building Classes')
+                
+                eq_classes = []
+                for ipoly in range(npoly_tot):
+                    print('class',ipoly,npoly_tot)
+                    direct_intersect = []
+                    for jpoly in range(npoly_tot):
+                        if inter_ij[ipoly,jpoly]:
+                            direct_intersect.append(jpoly)
+                    
+                    partial_class = set(direct_intersect)
+
+                    for the_class in eq_classes:
+                        
+                        if partial_class.intersection(the_class):
+                            
+                            partial_class.update(the_class)
+                    
+                    eq_classes = [ the_class for the_class in eq_classes if not(partial_class.intersection(the_class))]
+                    eq_classes.append(partial_class)
+                
+                print('Number of classes ',len(eq_classes))
+                
+                the_ids = []
+                the_geometry = []
+
+                print('Fusing polygons')
+
+                for iclass in range(len(eq_classes)):
+                    print('fuse',iclass,len(eq_classes))
+                    
+                    class_polys = [Big_GDF['geometry'][ipoly] for ipoly in eq_classes[iclass]]
+                    
+                    for ipoly in eq_classes[iclass]:
+                    
+                        for jpoly in eq_classes[iclass]:
+                            
+                            if (ipoly != jpoly):
+                                class_polys.append(exp_geometry[ipoly].intersection(exp_geometry[jpoly]))
+                    
+                    
+                    the_union = shapely.ops.unary_union(class_polys)
+                    
+                    if isinstance(the_union,shapely.geometry.polygon.Polygon) :
+                        the_ids.append(iclass)
+                        the_geometry.append(the_union)
+
+                gdf_fused = gpd.GeoDataFrame(
+                    {'Id': the_ids, 'geometry': the_geometry },
+                    crs={'proj':'cea'}
+                )
+                    
+                gdf_fused['Shape_Area'] = gdf_fused.area
+                gdf_fused.to_crs(img_open.crs,inplace=True) 
+
+                output_poly_filename = output_fused_poly_folder + 'all_polys.shp'
+                
+                try:
+                    gdf_fused.to_file(driver = 'ESRI Shapefile', filename= output_poly_filename)
+                except Exception:
+                    pass
+
+
+                shutil.rmtree(output_poly_folder)
+            
         
         
         # All model predictions done.

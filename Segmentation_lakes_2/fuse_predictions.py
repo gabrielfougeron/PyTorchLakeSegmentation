@@ -176,6 +176,8 @@ for file_path in input_img_list:
         training_folders = [os.path.join(base_poly_mul_folder, o) for o in os.listdir(base_poly_mul_folder) 
                             if os.path.isdir(os.path.join(base_poly_mul_folder,o))]
 
+        # print(training_folders)
+
         poly_img = np.zeros((nx_img,ny_img),dtype=np.uint8)
             
         print('\nReading Predictions\n')

@@ -301,13 +301,13 @@ for i_img in range(len(input_img_list)):
         
         ax.set_ylabel('Relative area wrt reference')
         # ax.set_ylim([0, 0.15])
-        ax.set_ylim([0, 0.2])
+        # ax.set_ylim([0, 0.2])
         # ax.set_ylim([0, 0.5])
         
         colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
                 
-        # custom_lines = [matplotlib.lines.Line2D([0], [0], color=colors[i], lw=10) for i in range(3)]
-        # ax.legend(custom_lines, ['False Positive Rate', 'False Negative Rate', 'False Prediction Rate'])
+        custom_lines = [matplotlib.lines.Line2D([0], [0], color=colors[i], lw=10) for i in range(3)]
+        ax.legend(custom_lines, ['False Positive Rate', 'False Negative Rate', 'False Prediction Rate'])
         
         
         plt.xticks(rotation=90)
