@@ -53,7 +53,7 @@ device = torch.device('cuda')
 # ]
 
 # List of big images => nx_out = 2048
-input_img_list = [
+# input_img_list = [
 # '/mnt/c/GeoData/Polygon_Annotations/1980_DZB1216/1980_DZB1216.tif',
 # '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/1989_07_16_Spot1/SCENE01/1989_07_16_Spot1.TIF',
@@ -62,7 +62,7 @@ input_img_list = [
 # '/mnt/c/GeoData/Polygon_Annotations/2011_09_11_Spot5/SCENE01/2011_09_11_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2012_07_25_Spot5/61-01_5_286221_12-07-25-0233311B0/2012_07_25_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2012_09_25_Spot5/SCENE01/2012_09_25_Spot5.TIF',
-'/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
+# '/mnt/c/GeoData/Polygon_Annotations/2013_07_14_Spot5/68-01_5_289222_13-07-14-0211442B0/2013_07_14_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5/SCENE01/2013_08_23_Spot5.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_23_Spot5b/SCENE01/2013_08_23_Spot5b.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2013_08_24_Spot5/SCENE01/2013_08_24_Spot5.TIF',
@@ -77,7 +77,7 @@ input_img_list = [
 # '/mnt/c/GeoData/training_gab_01_23_2022/2010_10_03_S/Spot2_2010_10_03b0.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/extra/Archive/C1980_test2.tif',
 # '/mnt/c/GeoData/Polygon_Annotations/2011_09_08_Spot5/56-01_5_289222_11-09-08-0213592B0/SCENE01/2011_09_08_Spot5.TIF',
-]
+# ]
 
 # input_img_list = [
 # '/mnt/c/GeoData/Polygon_Annotations/22.03.01/2010_10_03_Spot5b/SCENE01/2010_10_03_Spot5b.TIF',
@@ -94,8 +94,45 @@ input_img_list = [
 # '/mnt/c/GeoData/Polygon_Annotations/1989_07_12_Spot1/SCENE01/1989_07_12_Spot1.TIF',
 # '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
 # ]
-    
 
+input_img_list = [
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/01_5_289223_09-07-14-0226511B0_BW/SCENE01/2009_07_14_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29a/C_1967_29a_test_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29b/C_1967_29b_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_30/C_1967_30_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_31/C_1967_31_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_32/C_1967_32_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_33/C_1967_33_001.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/163-01_5_285222_08-06-09-0216381B8/SCENE01/2008_06_09.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/164-01_5_286222_08-07-19-0246551B1/SCENE01/2008_07_19.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/22-01_5_286223_06-05-20-0305362B0_BW/22-01_5_286223_06-05-20-0305362B0_BW/SCENE01/2006_05_20.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/23-01_5_289223_06-06-09-0321012B0_BW/23-01_5_289223_06-06-09-0321012B0_BW/SCENE01/2006_06_09.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/30-01_5_286223_07-06-21-0228362B0_BW/30-01_5_286223_07-06-21-0228362B0_BW/SCENE01/2007_06_21.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/31-01_5_289223_07-07-02-0216501B0_BW/31-01_5_289223_07-07-02-0216501B0_BW/SCENE01/2007_07_02.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/32-01_5_285222_07-07-04-0318302B0/SCENE01/2007_07_04.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/39-01_5_285221_08-07-24-0250351B0/SCENE01/2008_07_24_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/40-01_5_285222_08-07-24-0250431B0/SCENE01/2008_07_24_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/41-01_5_286222_08-09-09-0245551B0/SCENE01/2008_09_09_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/42-01_5_286223_08-09-09-0246031B0/SCENE01/2008_09_09_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/43-01_5_286220_10-10-03-0254522B0_BW/43-01_5_286220_10-10-03-0254522B0_BW/SCENE01/2010_10_03_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/44-01_5_286221_10-10-03-0255002B0/SCENE01/2010_10_03_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/46-01_5_286223_10-10-03-0255162B0_BW/46-01_5_286223_10-10-03-0255162B0_BW/SCENE01/2010_10_03_003.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/5-01_5_289222_09-07-14-0226441B0_BW/SCENE01/2009_07_14_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/53-01_5_286220_11-08-26-0304132B0_BW/53-01_5_286220_11-08-26-0304132B0_BW/SCENE01/2011_08_26.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/62-01_5_286222_12-07-25-0233381B0_BW/62-01_5_286222_12-07-25-0233381B0_BW/SCENE01/2012_07_25_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/63-01_5_286223_12-07-25-0233461B0_BW/63-01_5_286223_12-07-25-0233461B0_BW/SCENE01/2012_07_25_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/69-01_5_289223_13-07-19-0215282B0/69-01_5_289223_13-07-19-0215282B0/SCENE01/2013_07_19.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/79-01_5_285222_13-09-02-0247482B0_BW/79-01_5_285222_13-09-02-0247482B0_BW/SCENE01/2013_09_02.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29a/C_1967_29a_test_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29b/C_1967_29b_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_30/C_1967_30_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_31/C_1967_31_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_32/C_1967_32_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_33/C_1967_33_002.tif',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-5-01_52892220907140226441B0/SCENE01/2009_07_14_003.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-6-01_52892230907140226511B0/SCENE01/2009_07_14_004.TIF',
+]
+    
 
 for file_path in input_img_list:
     if not(os.path.isfile(file_path)):
@@ -111,8 +148,6 @@ target_stddev_list = [  40  ,60 ,80 ,40  ,60 ,80 ,40  ,60 ,80 ,]
 
 # target_mean_list = [   None]
 # target_stddev_list = [  None]
-
-
 
 n_contrast = len(target_mean_list)
 
@@ -352,7 +387,7 @@ for file_path in input_img_list:
                     for ix in range(ixmin,ixmax):
                         for iy in range(iymin,iymax):
                             
-                            print(model_root,' ',i_contrast,n_contrast,istart,istartmax,ix,ixmax,iy,iymax)
+                            print(model_root,' ',i_contrast+1,n_contrast,istart+1,istartmax,ix+1,ixmax,iy+1,iymax)
 
                             # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
                             
