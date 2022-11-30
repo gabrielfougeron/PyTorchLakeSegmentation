@@ -4,7 +4,9 @@ out_filename = 'all_files.txt'
 
 
 # base_path = '/mnt/c/GeoData/New_scenes/'
-base_path = '/mnt/c/GeoData/New_scenes/Scenes_BW_New/'
+# base_path = '/mnt/c/GeoData/New_scenes/Scenes_BW_New/'
+# base_path = '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/'
+base_path = '/mnt/c/GeoData/New_scenes/Scenes_Color_New/'
 
 Do_rename = True
 # Do_rename = False
@@ -12,12 +14,22 @@ Do_rename = True
 
 # min size in bytes
 min_size = 100 * 1024 * 1024
+# min_size = 10 * 1024 * 1024
+
+# max_size = 101 * 1024 * 1024
+max_size = 10 * 1024 * 1024 * 1024
 
 accepted_ext = [
     '.TIF',
     '.tif',
     '.Tif',
 ]
+# 
+# accepted_ext = [
+#     '.TIFF',
+#     '.tiff',
+#     '.Tiff',
+# ]
 
 all_found_files = []
 
@@ -28,9 +40,12 @@ for root, dirs, files in os.walk(base_path):
 
         base,ext =  os.path.splitext(full_filename)
 
-        if (ext in accepted_ext) and (os.path.getsize(full_filename) > min_size):
+        if (ext in accepted_ext) and (os.path.getsize(full_filename) > min_size) and (os.path.getsize(full_filename) < max_size):
 
             all_found_files.append(full_filename)
+
+
+# print(all_found_files)
 
 if Do_rename:
 
@@ -53,10 +68,11 @@ if Do_rename:
         all_n_duplicates.append(n_duplicate)
         is_duplicate.append(n_duplicate > 0)
 # 
-#         print(base)
+        # print(full_filename)
+        # print(int(os.path.getsize(full_filename)/(1024*1024)))
 #         print(n_duplicate)
-#         print('')
-
+        # print('')
+# 
     for i in range(len(all_found_files)):
         
         full_filename = all_found_files[i]
@@ -68,11 +84,11 @@ if Do_rename:
 
             new_file = base+'_'+str(n_duplicate+1).zfill(3)+ext
         # 
-        #     print(full_filename)
-        #     print(new_file)
-        #     print('')
+            print(full_filename)
+            print(new_file)
+            print('')
 
-            os.rename(full_filename, new_file)
+            # os.rename(full_filename, new_file)
 
 
 

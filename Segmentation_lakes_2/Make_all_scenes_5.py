@@ -95,42 +95,112 @@ device = torch.device('cuda')
 # '/mnt/c/GeoData/Polygon_Annotations/2007_08_02_Spot5/SCENE01/2007_08_02_Spot5.TIF',
 # ]
 
+# input_img_list = [
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/01_5_289223_09-07-14-0226511B0_BW/SCENE01/2009_07_14_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29a/C_1967_29a_test_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29b/C_1967_29b_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_30/C_1967_30_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_31/C_1967_31_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_32/C_1967_32_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_33/C_1967_33_001.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/163-01_5_285222_08-06-09-0216381B8/SCENE01/2008_06_09.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/164-01_5_286222_08-07-19-0246551B1/SCENE01/2008_07_19.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/22-01_5_286223_06-05-20-0305362B0_BW/22-01_5_286223_06-05-20-0305362B0_BW/SCENE01/2006_05_20.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/23-01_5_289223_06-06-09-0321012B0_BW/23-01_5_289223_06-06-09-0321012B0_BW/SCENE01/2006_06_09.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/30-01_5_286223_07-06-21-0228362B0_BW/30-01_5_286223_07-06-21-0228362B0_BW/SCENE01/2007_06_21.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/31-01_5_289223_07-07-02-0216501B0_BW/31-01_5_289223_07-07-02-0216501B0_BW/SCENE01/2007_07_02.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/32-01_5_285222_07-07-04-0318302B0/SCENE01/2007_07_04.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/39-01_5_285221_08-07-24-0250351B0/SCENE01/2008_07_24_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/40-01_5_285222_08-07-24-0250431B0/SCENE01/2008_07_24_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/41-01_5_286222_08-09-09-0245551B0/SCENE01/2008_09_09_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/42-01_5_286223_08-09-09-0246031B0/SCENE01/2008_09_09_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/43-01_5_286220_10-10-03-0254522B0_BW/43-01_5_286220_10-10-03-0254522B0_BW/SCENE01/2010_10_03_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/44-01_5_286221_10-10-03-0255002B0/SCENE01/2010_10_03_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/46-01_5_286223_10-10-03-0255162B0_BW/46-01_5_286223_10-10-03-0255162B0_BW/SCENE01/2010_10_03_003.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/5-01_5_289222_09-07-14-0226441B0_BW/SCENE01/2009_07_14_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/53-01_5_286220_11-08-26-0304132B0_BW/53-01_5_286220_11-08-26-0304132B0_BW/SCENE01/2011_08_26.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/62-01_5_286222_12-07-25-0233381B0_BW/62-01_5_286222_12-07-25-0233381B0_BW/SCENE01/2012_07_25_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/63-01_5_286223_12-07-25-0233461B0_BW/63-01_5_286223_12-07-25-0233461B0_BW/SCENE01/2012_07_25_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/69-01_5_289223_13-07-19-0215282B0/69-01_5_289223_13-07-19-0215282B0/SCENE01/2013_07_19.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/79-01_5_285222_13-09-02-0247482B0_BW/79-01_5_285222_13-09-02-0247482B0_BW/SCENE01/2013_09_02.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29a/C_1967_29a_test_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29b/C_1967_29b_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_30/C_1967_30_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_31/C_1967_31_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_32/C_1967_32_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_33/C_1967_33_002.tif',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-5-01_52892220907140226441B0/SCENE01/2009_07_14_003.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-6-01_52892230907140226511B0/SCENE01/2009_07_14_004.TIF',
+# ]
+# 
+# 
+# 
+#   
+# input_img_list = [
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/55-01_5_289223_11-09-02-0229432B0_BW/55-01_5_289223_11-09-02-0229432B0_BW/SCENE01/2011_09_02.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/56-01_5_289222_11-09-08-0213592B0_BW/56-01_5_289222_11-09-08-0213592B0_BW/SCENE01/2011_09_08.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/58-01_5_286221_11-09-21-0303512B0/SCENE01/2011-09-21.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/59-01_5_286222_11-09-21-0303592B0_BW/59-01_5_286222_11-09-21-0303592B0/SCENE01/2011_09_21.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/65-01_5_289221_12-09-25-0239152B_BW/65-01_5_289221_12-09-25-0239152B0/SCENE01/2012_09_25_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/66-01_5_289222_12-09-25-0239232B0/66-01_5_289222_12-09-25-0239232B0/SCENE01/2012_09_25_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/67-01_5_289223_12-09-25-0239312B0/67-01_5_289223_12-09-25-0239312B0/SCENE01/2012_09_25_003.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_Color_BW_Duplicates/71-01_5_286221_13-08-19-0217252B0/71-01_5_286221_13-08-19-0217252B0/SCENE01/2013_08_19.TIF',
+# ]  
+
+# input_img_list = [
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/131-01_4_286221_10-09-26-0238301M0/131-01_4_286221_10-09-26-0238301M0/42862211009260238301M0/2010_09_26_001.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/133-01_4_286223_10-09-26-0238461M0/133-01_4_286223_10-09-26-0238461M0/SCENE01/2010_09_26_002.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/UniversiteParisSud_A.SEJOURNE_SO20004818-142-01_12852228907160319441P0/SCENE01/1989_07_16.TIF',
+# '/mnt/c/GeoData/New_scenes/Scenes_BW_New/143-01_4_289220_10-08-21-0231452M7/143-01_4_289220_10-08-21-0231452M7/SCENE01/2010_08_21.TIF',
+# ]
+
 input_img_list = [
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/01_5_289223_09-07-14-0226511B0_BW/SCENE01/2009_07_14_001.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29a/C_1967_29a_test_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_29b/C_1967_29b_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_30/C_1967_30_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_31/C_1967_31_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_32/C_1967_32_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/142-01_1285222_89-07-16-0319441P0/C_1967_33/C_1967_33_001.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/163-01_5_285222_08-06-09-0216381B8/SCENE01/2008_06_09.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/164-01_5_286222_08-07-19-0246551B1/SCENE01/2008_07_19.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/22-01_5_286223_06-05-20-0305362B0_BW/22-01_5_286223_06-05-20-0305362B0_BW/SCENE01/2006_05_20.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/23-01_5_289223_06-06-09-0321012B0_BW/23-01_5_289223_06-06-09-0321012B0_BW/SCENE01/2006_06_09.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/30-01_5_286223_07-06-21-0228362B0_BW/30-01_5_286223_07-06-21-0228362B0_BW/SCENE01/2007_06_21.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/31-01_5_289223_07-07-02-0216501B0_BW/31-01_5_289223_07-07-02-0216501B0_BW/SCENE01/2007_07_02.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/32-01_5_285222_07-07-04-0318302B0/SCENE01/2007_07_04.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/39-01_5_285221_08-07-24-0250351B0/SCENE01/2008_07_24_001.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/40-01_5_285222_08-07-24-0250431B0/SCENE01/2008_07_24_002.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/41-01_5_286222_08-09-09-0245551B0/SCENE01/2008_09_09_001.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/42-01_5_286223_08-09-09-0246031B0/SCENE01/2008_09_09_002.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/43-01_5_286220_10-10-03-0254522B0_BW/43-01_5_286220_10-10-03-0254522B0_BW/SCENE01/2010_10_03_001.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/44-01_5_286221_10-10-03-0255002B0/SCENE01/2010_10_03_002.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/46-01_5_286223_10-10-03-0255162B0_BW/46-01_5_286223_10-10-03-0255162B0_BW/SCENE01/2010_10_03_003.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/5-01_5_289222_09-07-14-0226441B0_BW/SCENE01/2009_07_14_002.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/53-01_5_286220_11-08-26-0304132B0_BW/53-01_5_286220_11-08-26-0304132B0_BW/SCENE01/2011_08_26.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/62-01_5_286222_12-07-25-0233381B0_BW/62-01_5_286222_12-07-25-0233381B0_BW/SCENE01/2012_07_25_001.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/63-01_5_286223_12-07-25-0233461B0_BW/63-01_5_286223_12-07-25-0233461B0_BW/SCENE01/2012_07_25_002.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/69-01_5_289223_13-07-19-0215282B0/69-01_5_289223_13-07-19-0215282B0/SCENE01/2013_07_19.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/79-01_5_285222_13-09-02-0247482B0_BW/79-01_5_285222_13-09-02-0247482B0_BW/SCENE01/2013_09_02.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29a/C_1967_29a_test_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_29b/C_1967_29b_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_30/C_1967_30_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_31/C_1967_31_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_32/C_1967_32_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/C_1967_33/C_1967_33_002.tif',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-5-01_52892220907140226441B0/SCENE01/2009_07_14_003.TIF',
-'/mnt/c/GeoData/New_scenes/Scenes_BW_New/UniversiteParisSud_A.SEJOURNE_SO20004818-6-01_52892230907140226511B0/SCENE01/2009_07_14_004.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/84-01_5_286223_07-06-21-0228362B0_color/84-01_5_286223_07-06-21-0228362B0/DATA_N1915.17_E146.32/SPVIEW__2020_0/2007_06_21_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/84-01_5_286223_07-06-21-0228362B0_color/84-01_5_286223_07-06-21-0228362B0/DATA_N1915.17_E160.21/SPVIEW__2020_0/2007_06_21_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/88-01_5_289223_11-09-02-0229432B0_color/88-01_5_289223_11-09-02-0229432B0_color/DATA_N1915.33_E155.92/SPVIEW__2020_0/2011_09_02_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/88-01_5_289223_11-09-02-0229432B0_color/88-01_5_289223_11-09-02-0229432B0_color/DATA_N1915.33_E169.81/SPVIEW__2020_0/2011_09_02_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/89-01_5_289222_11-09-08-0213592B0_color/89-01_5_289222_11-09-08-0213592B0_color/DATA_N1929.06_E160.61/SPVIEW__2020_0/2011_09_08_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/89-01_5_289222_11-09-08-0213592B0_color/89-01_5_289222_11-09-08-0213592B0_color/DATA_N1929.06_E174.50/SPVIEW__2020_0/2011_09_08_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/90-01_5_286222_11-09-11-0256292B0_color/90-01_5_286222_11-09-11-0256292B0_color/DATA_N1929.15_E147.24/SPVIEW__2020_0/2011_09_11_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/90-01_5_286222_11-09-11-0256292B0_color/90-01_5_286222_11-09-11-0256292B0_color/DATA_N1929.15_E161.12/SPVIEW__2020_0/2011_09_11_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/91-01_5_286221_11-09-21-0303512B0_color/91-01_5_286221_11-09-21-0303512B0_color/DATA_N1943.14_E152.28/SPVIEW__2020_0/2011_09_21_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/91-01_5_286221_11-09-21-0303512B0_color/91-01_5_286221_11-09-21-0303512B0_color/DATA_N1943.14_E166.17/SPVIEW__2020_0/2011_09_21_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/92-01_5_286222_11-09-21-0303592B0_color/92-01_5_286222_11-09-21-0303592B0_color/DATA_N1929.40_E146.67/SPVIEW__2020_0/2011_09_21_003.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/92-01_5_286222_11-09-21-0303592B0_color/92-01_5_286222_11-09-21-0303592B0_color/DATA_N1929.40_E160.56/SPVIEW__2020_0/2011_09_21_004.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/93-01_5_289221_12-09-25-0239152B0_color/93-01_5_289221_12-09-25-0239152B0_color/DATA_N1943.24_E167.57/SPVIEW__2020_0/2012_09_25_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/93-01_5_289221_12-09-25-0239152B0_color/93-01_5_289221_12-09-25-0239152B0_color/DATA_N1943.24_E181.46/SPVIEW__2020_0/2012_09_25_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/94-01_5_289222_12-09-25-0239232B0_color/94-01_5_289222_12-09-25-0239232B0_color/DATA_N1929.44_E162.88/SPVIEW__2020_0/2012_09_25_003.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/94-01_5_289222_12-09-25-0239232B0_color/94-01_5_289222_12-09-25-0239232B0_color/DATA_N1929.44_E176.77/SPVIEW__2020_0/2012_09_25_004.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/95-01_5_289223_12-09-25-0239312B0_color/95-01_5_289223_12-09-25-0239312B0_color/DATA_N1915.64_E158.16/SPVIEW__2020_0/2012_09_25_005.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/95-01_5_289223_12-09-25-0239312B0_color/95-01_5_289223_12-09-25-0239312B0_color/DATA_N1915.64_E172.05/SPVIEW__2020_0/2012_09_25_006.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/96-01_5_286221_13-08-19-0217252B0_color/96-01_5_286221_13-08-19-0217252B0_color/DATA_N1942.59_E151.33/SPVIEW__2020_0/2013_08_19.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/96-01_5_286221_13-08-19-0217252B0_color/96-01_5_286221_13-08-19-0217252B0_color/DATA_N1942.59_E165.22/SPVIEW__2020_0/IMAGERY.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/97-01_5_286221_13-08-24-0221032B0_color/97-01_5_286221_13-08-24-0221032B0_color/DATA_N1942.64_E151.60/SPVIEW__2020_0/2013_08_24_001.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/97-01_5_286221_13-08-24-0221032B0_color/97-01_5_286221_13-08-24-0221032B0_color/DATA_N1942.64_E165.49/SPVIEW__2020_0/2013_08_24_002.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906160223161_ORT_SPOT7_20220414_1249371xpqav8ihwwo9_1_R1C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906160223161_ORT_SPOT7_20220414_1249371xpqav8ihwwo9_1_R1C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906160223161_ORT_SPOT7_20220414_1249371xpqav8ihwwo9_1_R2C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_133/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906160223161_ORT_SPOT7_20220414_1249371xpqav8ihwwo9_1_R2C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R1C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R1C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R2C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R2C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R3C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_134/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906170217486_ORT_SPOT6_20220414_1250221d1dddrhqa7iq_1_R3C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906180209561_ORT_SPOT7_20220414_1251471izznmsxga4fv_1_R1C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906180209561_ORT_SPOT7_20220414_1251471izznmsxga4fv_1_R1C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906180209561_ORT_SPOT7_20220414_1251471izznmsxga4fv_1_R2C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_135/PROD_SPOT7_001/VOL_SPOT7_001_A/IMG_SPOT7_MS_001_A/IMG_SPOT7_MS_201906180209561_ORT_SPOT7_20220414_1251471izznmsxga4fv_1_R2C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906190204145_ORT_SPOT6_20220414_1252311a8d226q5vds4_1_R1C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906190204145_ORT_SPOT6_20220414_1252311a8d226q5vds4_1_R1C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906190204145_ORT_SPOT6_20220414_1252311a8d226q5vds4_1_R2C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_136/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201906190204145_ORT_SPOT6_20220414_1252311a8d226q5vds4_1_R2C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R1C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R1C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R2C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R2C2.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R3C1.TIF',
+'/mnt/c/GeoData/New_scenes/Scenes_Color_New/SPOT6_2019_HC-Ortho_NC_DRS-MS_SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/SPOT6_2019_HC_ORTHO_NC_GEOSUD_MS_137/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_MS_001_A/IMG_SPOT6_MS_201907130218426_ORT_SPOT6_20220414_1255161uhbygy74saku_1_R3C2.TIF',
 ]
     
 
@@ -216,7 +286,7 @@ mod_img_lara_fix = True
 # mod_img_lara_fix = False
 
 n_input_img = len(input_img_list)
-
+n_model = len(model_list)
 
 
 all_pred_folder = './all_predictions/'
@@ -259,8 +329,8 @@ for file_path in input_img_list:
         
         filename_path_save = base_img_folder+'img_path.txt'
         
-        # if os.path.isfile(filename_path_save):
-            # raise ValueError(f'File {filename_path_save} already exists')
+        if os.path.isfile(filename_path_save):
+            raise ValueError(f'File {filename_path_save} already exists')
         
         with open(filename_path_save, 'w') as outfile:
             outfile.write(file_path)
@@ -326,15 +396,13 @@ for file_path in input_img_list:
 
 
 
-            for the_model in model_list:
+            for i_model in range(n_model):
+                the_model = model_list[i_model]
                 
                 the_basename = os.path.basename(the_model)
                 model_root,ext = os.path.splitext(the_basename)
                 
-                print(model_root,ext)
-                
                 base_model_folder =base_poly_mul_folder+model_root+'_'+str(i_contrast).zfill(2)+'/'
-                    
 
                 output_poly_folder = base_model_folder +'polygons/'
                 output_fused_poly_folder = base_model_folder+'fused_polygons/'
@@ -387,7 +455,22 @@ for file_path in input_img_list:
                     for ix in range(ixmin,ixmax):
                         for iy in range(iymin,iymax):
                             
-                            print(model_root,' ',i_contrast+1,n_contrast,istart+1,istartmax,ix+1,ixmax,iy+1,iymax)
+
+                            # print(model_root,' ',i_contrast+1,n_contrast,istart+1,istartmax,ix+1,ixmax,iy+1,iymax)
+                            # print(i_img,'/',n_input_img,i_contrast+1,n_contrast,istart+1,istartmax,ix+1,ixmax,iy+1,iymax)
+
+                            info_msg = [
+                                (i_img,n_input_img),
+                                (i_contrast+1,n_contrast),
+                                (i_model+1,n_model),
+                                (istart+1,istartmax),
+                                (ix+1,ixmax),
+                                (iy+1,iymax),
+                            ]
+                            
+                            printlist = [f'{i}/{j}   ' for (i,j) in info_msg]
+                            printmsg = ''.join(printlist)
+                            print(printmsg)
 
                             # img_uint8_small = img_uint8[xstart+ix*nx_out:xstart+(ix+1)*nx_out,ystart+iy*ny_out:ystart+(iy+1)*ny_out]
                             
@@ -596,7 +679,7 @@ for file_path in input_img_list:
                 exp_geometry = []
 
                 for ipoly in range(npoly_tot):
-                    print('buffer',ipoly,npoly_tot)
+                    # print('buffer',ipoly,npoly_tot)
                     
                     if (buffer_distance == 0):
                         exp_geometry.append(Big_GDF['geometry'][ipoly])
@@ -608,7 +691,7 @@ for file_path in input_img_list:
                 print('Computing intersections')
 
                 for ipoly in range(npoly_tot):
-                    print('intersection',ipoly,npoly_tot)
+                    # print('intersection',ipoly,npoly_tot)
                     inter_ij[ipoly,ipoly] = True
                     for jpoly in range(ipoly+1,npoly_tot):
                         inter_ij[ipoly,jpoly] = exp_geometry[ipoly].intersects(exp_geometry[jpoly])
@@ -618,7 +701,7 @@ for file_path in input_img_list:
                 
                 eq_classes = []
                 for ipoly in range(npoly_tot):
-                    print('class',ipoly,npoly_tot)
+                    # print('class',ipoly,npoly_tot)
                     direct_intersect = []
                     for jpoly in range(npoly_tot):
                         if inter_ij[ipoly,jpoly]:
@@ -643,7 +726,7 @@ for file_path in input_img_list:
                 print('Fusing polygons')
 
                 for iclass in range(len(eq_classes)):
-                    print('fuse',iclass,len(eq_classes))
+                    # print('fuse',iclass,len(eq_classes))
                     
                     class_polys = [Big_GDF['geometry'][ipoly] for ipoly in eq_classes[iclass]]
                     
